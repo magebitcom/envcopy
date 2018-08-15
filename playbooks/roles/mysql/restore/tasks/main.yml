@@ -4,3 +4,12 @@
 
 - name: Restore mysql database
   shell: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ project | replace('-','_') }} < /var/www/{{ project }}/sql/web.sql"
+
+- name: Replace unsecure web URL
+  command: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ project | replace('-','_') }} -e \"update core_config_data set value = 'http://{{ project }}.local/' where path = 'web/unsecure/base_url';\""
+
+- name: Replace secure web URL
+  command: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ project | replace('-','_') }} -e \"update core_config_data set value = 'http://{{ project }}.local/' where path = 'web/secure/base_url';\""
+
+- name: Replace cookie domain
+  command: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ project | replace('-','_') }} -e \"update core_config_data set value = '{{ project }}.local' where path = 'web/cookie/cookie_domain';\""

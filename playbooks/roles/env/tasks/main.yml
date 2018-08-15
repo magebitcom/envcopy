@@ -53,12 +53,12 @@
     src: "/etc/nginx/sites-available/{{ project }}"
     dest: "/etc/nginx/sites-enabled/{{ project }}"
     state: link
-#  notify:
-#    - restart nginx
+  notify:
+    - restart nginx
   become: yes
 
 - name: Update /etc/hosts file
   lineinfile:
     path: /etc/hosts
-    line: "127.0.0.1 {{ project }}"
+    line: "127.0.0.1 {{ project }} {{ project }}.local"
   become: yes
