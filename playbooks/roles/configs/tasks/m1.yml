@@ -13,3 +13,10 @@
     path: "/var/www/{{ project }}/app/etc/local.xml"
     regexp: "<host>"
     line: "                    <host><![CDATA[localhost:3306]]></host>"
+
+- name: Replace DB name
+  local_action:
+    module: replace
+    path: "/var/www/{{ project }}/app/etc/env.php"
+    regexp: 'staging'
+    replace: "{{ project | replace('-','_') }}"
