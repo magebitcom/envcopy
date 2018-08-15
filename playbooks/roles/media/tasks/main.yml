@@ -1,0 +1,30 @@
+---
+- name: Set media path
+  set_fact:
+    media_path: "{% if project_type == 'm2' %}/var/www/staging/www/pub/media/*{% else %}/var/www/staging/www/media/*{% endif %}"
+
+- name: Set local media path
+  set_fact:
+    media_path_local: "{% if project_type == 'm2' %}/var/www/{{ project }}/pub/media/{% else %}/var/www/{{ project }}/media/{% endif %}"
+
+- name: Archive media
+  archive:
+    path: "{{ media_path }}"
+    dest: /tmp/media.tgz
+
+- name: Download media to project dir
+  fetch:
+    src: /tmp/media.tgz
+    dest: "{{ media_path_local }}"
+    flat: yes
+
+- name: Delete media.tgz
+  file:
+    path: /tmp/media.tgz
+    state: absent
+
+- name: Unarchive media.tgz
+  local_action: shell tar xzvf media.tgz
+  args: 
+    chdir: "{{ media_path_local }}"
+  become: true

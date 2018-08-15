@@ -1,0 +1,6 @@
+---
+- name: Create mysql database
+  command: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} -e 'CREATE DATABASE IF NOT EXISTS {{ project | replace('-','_') }};'"
+
+- name: Restore mysql database
+  shell: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ project | replace('-','_') }} < /var/www/{{ project }}/sql/web.sql"

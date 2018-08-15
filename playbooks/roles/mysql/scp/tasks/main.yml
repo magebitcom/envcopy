@@ -1,0 +1,13 @@
+- name: Dump mysql database
+  shell: "mysqldump -u{{ mysql_user }} -p{{ mysql_pass }} {{ mysql_db }} > /tmp/web.sql"
+
+- name: Download mysqldump to project dir
+  fetch:
+    src: /tmp/web.sql
+    dest: "/var/www/{{ project }}/sql/"
+    flat: yes
+
+- name: Delete dump
+  file:
+    path: /tmp/web.sql
+    state: absent
