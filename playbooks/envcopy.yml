@@ -12,23 +12,23 @@
   become: true
   gather_facts: true
   roles:
-#     - mysql/dump
-#     - media/dump
+     - mysql/dump
+     - media/dump
      - configs
     
 - hosts: localhost
   connection: local
   gather_facts: false
   roles:
-#     - mysql/scp
+     - mysql/scp
      - mysql/restore
-#     - media/scp
-#     - media/restore
+     - media/scp
+     - media/restore
 
-#- hosts: ec2host
-#  remote_user: "{{ aws_username }}"
-#  become: true
-#  gather_facts: true
-#  roles:
-#     - mysql/remove
-#     - media/remove
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
+     - mysql/remove
+     - media/remove
