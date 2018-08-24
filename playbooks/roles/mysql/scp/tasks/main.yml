@@ -2,10 +2,3 @@
   shell: "scp -i ~/.ssh/id_rsa {{ aws_username }}@{{ project }}.stgin.com:/tmp/web.sql ./"
   args:
     chdir: "/var/www/{{ project }}/sql/"
-
-#- name: test
-#  synchronize:
-#    src: /tmp/web.sql
-#    dest: /tmp/web.sql
-#  delegate_to: delegate.fravin.stgin.com
-#  remote_user: vitalijs.volodenkovs

@@ -20,7 +20,7 @@
   connection: local
   gather_facts: false
   roles:
-     - mysql/scp
+#     - mysql/scp
      - mysql/restore
 #     - media/scp
 #     - media/restore
