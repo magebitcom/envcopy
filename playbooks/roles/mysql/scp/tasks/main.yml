@@ -1,13 +1,11 @@
-- name: Dump mysql database
-  shell: "mysqldump -u{{ mysql_user }} -p{{ mysql_pass }} {{ mysql_db }} > /tmp/web.sql"
-
 - name: Download mysqldump to project dir
-  fetch:
-    src: /tmp/web.sql
-    dest: "/var/www/{{ project }}/sql/"
-    flat: yes
+  shell: "scp -i ~/.ssh/id_rsa {{ aws_username }}@{{ project }}.stgin.com:/tmp/web.sql ./"
+  args:
+    chdir: "/var/www/{{ project }}/sql/"
 
-- name: Delete dump
-  file:
-    path: /tmp/web.sql
-    state: absent
+#- name: test
+#  synchronize:
+#    src: /tmp/web.sql
+#    dest: /tmp/web.sql
+#  delegate_to: delegate.fravin.stgin.com
+#  remote_user: vitalijs.volodenkovs

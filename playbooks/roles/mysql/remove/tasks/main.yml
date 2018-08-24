@@ -1,0 +1,4 @@
+- name: Delete dump
+  file:
+    path: /tmp/web.sql
+    state: absent

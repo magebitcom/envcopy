@@ -1,0 +1,4 @@
+---
+mysql_user: root
+mysql_pass: option123
+mysql_db: staging

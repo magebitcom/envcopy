@@ -1,0 +1,10 @@
+---
+- name: Set local media path
+  set_fact:
+    media_path_local: "{% if project_type == 'm2' %}/var/www/{{ project }}/pub/media/{% else %}/var/www/{{ project }}/media/{% endif %}"
+
+- name: Unarchive media.tgz
+  shell: tar xzvf media.tgz
+  args: 
+    chdir: "{{ media_path_local }}"
+  become: true

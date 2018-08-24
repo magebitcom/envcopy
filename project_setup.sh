@@ -13,7 +13,10 @@ echo "ERROR: Unknown project type."
 exit 1
 fi
 
+echo -n "Define DB name [default: staging]: "
+read mysql_db
+
 echo -n "Define AWS SSH username: "
 read aws_username
 #################################################################################
-./ansible-playbook -K -i localhost, playbooks/envcopy.yml -e project=$project -e project_type=$project_type -e aws_username=$aws_username
+./ansible-playbook -K -i localhost, playbooks/envcopy.yml -e project=$project -e project_type=$project_type -e aws_username=$aws_username -e mysql_db=$mysql_db

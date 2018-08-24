@@ -17,6 +17,6 @@
 - name: Replace DB name
   local_action:
     module: replace
-    path: "/var/www/{{ project }}/app/etc/env.php"
+    path: "/var/www/{{ project }}/app/etc/local.xml"
     regexp: 'staging'
     replace: "{{ project | replace('-','_') }}"
