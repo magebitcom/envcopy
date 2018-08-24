@@ -6,21 +6,6 @@
 - name: Print username
   debug: var=username_on_the_host.stdout
 
-- name: Create www-data group for MacOSX
-  local_action: command dscl . create /Groups/www-data gid 10000
-  become: true
-  with_items:
-    - dscl . create /Groups/www-data gid 10000
-    - dscl . -append /groups/www-data gid 10000
-    - dscl . -append /groups/www-data passwd "*"
-  when: ansible_distribution == "MacOSX"
-
-- name: Create www-data group got non-MacOSX
-  group:
-    name: www-data
-    state: present
-  when: ansible_distribution != "MacOSX"
-
 - name: Set local media path
   set_fact:
     media_path_local: "{% if project_type == 'm2' %}/var/www/{{ project }}/pub/media{% else %}/var/www/{{ project }}/media{% endif %}"
