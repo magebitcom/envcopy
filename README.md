@@ -1,10 +1,12 @@
 Requirements:
 
-	1. You should have SSH access to EC2
-	2. SSH private key should be located in ~/.ssh/ directory
-  	3. Nginx should be installed and running
-  	4. MySQL should be installed and running
-  	5. MySQL root password should be option123
+	1. Ubuntu16 OS
+	2. MySQL, nginx, php*, ansible 2.4 should be installed
+	3. You should have SSH access to EC2
+	4. SSH private key should be located in ~/.ssh/ directory
+  	5. Nginx should be installed and running
+  	6. MySQL should be installed and running
+  	7. MySQL root password should be option123
 
 HOWTO:
 
