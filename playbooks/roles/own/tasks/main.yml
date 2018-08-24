@@ -1,0 +1,7 @@
+---
+- name: Change project dir owner
+  file:
+    dest: "/var/www/{{ project }}"
+    owner: www-data
+    group: www-data
+    recurse: true
