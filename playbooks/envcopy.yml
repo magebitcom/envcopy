@@ -3,7 +3,7 @@
   connection: local
   gather_facts: false
   roles:
-     - env
+     - env/create
      - register-ec2host
 
 - hosts: ec2host

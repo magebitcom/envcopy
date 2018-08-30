@@ -1,0 +1,35 @@
+---
+- name: Ensure nginx and mysql is running
+  service:
+    name: "{{ item }}"
+    state: started
+  with_items:
+    - nginx
+    - mysql
+
+- name: Delete project directories
+  file:
+    path: "/var/www/{{ project }}"
+    state: absent
+  become: yes
+
+- name: Delete nginx vhost
+  file:
+    path: "/etc/nginx/sites-available/{{ project }}"
+    state: absent
+  become: yes
+
+- name: Remove link
+  file:
+    path: "/etc/nginx/sites-enabled/{{ project }}"
+    state: absent
+  notify:
+    - restart nginx
+  become: yes
+
+- name: Update /etc/hosts file
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1 {{ project }} {{ project }}.local"
+    state: absent
+  become: yes
