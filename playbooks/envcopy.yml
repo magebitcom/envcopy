@@ -3,7 +3,6 @@
   connection: local
   gather_facts: false
   roles:
-     - env/create
      - register-ec2host
 
 - hosts: ec2host
@@ -11,8 +10,21 @@
   become: true
   gather_facts: true
   roles:
+     - magento/version
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+     - env/create
+
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
      - mysql/dump
-     - media/dump
+#     - media/dump
      - configs
     
 - hosts: localhost
@@ -21,8 +33,8 @@
   roles:
      - mysql/scp
      - mysql/restore
-     - media/scp
-     - media/restore
+#     - media/scp
+#     - media/restore
      - own
 
 - hosts: ec2host
@@ -32,3 +44,4 @@
   roles:
      - mysql/remove
      - media/remove
+

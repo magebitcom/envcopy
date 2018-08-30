@@ -1,4 +1,9 @@
 ---
+- name: Set project_type
+  set_fact:
+    project_type: "{{hostvars[item]['project_type']}}"
+  with_items: "{{ project }}.stgin.com"
+
 - name: Ensure nginx and mysql is running
   service:
     name: "{{ item }}"

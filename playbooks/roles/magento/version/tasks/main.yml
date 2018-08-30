@@ -1,0 +1,13 @@
+---
+- name: Check magento version
+  stat:
+    path: "/var/www/staging/www/app/etc/local.xml"
+  register: stat_result
+
+- name: Set project_type
+  set_fact:
+    project_type: "{% if stat_result.stat.exists == False %}m2{% else %}m1{% endif %}"
+
+- name: Echo project_type
+  debug:
+    msg: "{{ project_type }}"

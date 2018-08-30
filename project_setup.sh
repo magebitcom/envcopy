@@ -2,17 +2,6 @@
 echo -n "Define project name without .stgin.com domain name [example: projectx]: "
 read project
 
-echo -n "Define project type [example: m1 or m2]: "
-read project_type
-if [ "$project_type" == "m2" ]; then
-sleep 0.1
-elif [ "$project_type" == "m1" ]; then
-sleep 0.1
-else
-echo "ERROR: Unknown project type."
-exit 1
-fi
-
 echo -n "Define DB name [example: staging]: "
 read mysql_db
 
