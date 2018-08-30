@@ -1,4 +1,12 @@
 ---
+- name: Ensure nginx and mysql is running
+  service:
+    name: {{ item }}
+    state: started
+  with_items:
+    - nginx
+    - mysql
+
 - name: Get the username running the deploy
   local_action: command whoami
   register: username_on_the_host
