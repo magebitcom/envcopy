@@ -11,3 +11,33 @@
 - name: Echo project_type
   debug:
     msg: "{{ project_type }}"
+
+- name: Get mysql db name from m2 project
+  shell: "cat /var/www/staging/www/app/etc/env.php | grep dbname | awk '{print $1}' | sed \"s/'//g\""
+  when: project_type == "m2"
+  register: mysql_db_name
+
+- name: Get mysql db name from m1 project
+  shell: "cat /var/www/staging/www/app/etc/local.xml | grep dbname | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\""
+  when: project_type == "m1"
+  register: mysql_db_name
+
+- name: Set mysql_db
+  set_fact:
+    mysql_db: "{{ mysql_db_name.stdout }}"
+
+- name: Echo mysql_db
+  debug:
+    msg: "{{ mysql_db }}"
+
+- name: Get mysql table prefix
+  shell: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ mysql_db }} -e \"show tables like '%core_config_data%'\" | grep 'core_config_data' | tail -n 1 | sed 's/core_config_data//g'" 
+  register: mysql_table_prefix
+
+- name: Set table_prefix
+  set_fact:
+    table_prefix: "{{ mysql_table_prefix.stdout }}"
+
+- name: Echo table_repfix
+  debug:
+    msg: "{{ table_prefix }}"

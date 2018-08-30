@@ -4,6 +4,16 @@
     project_type: "{{hostvars[item]['project_type']}}"
   with_items: "{{ project }}.stgin.com"
 
+- name: Set mysql_db
+  set_fact:
+    mysql_db: "{{hostvars[item]['mysql_db']}}"
+  with_items: "{{ project }}.stgin.com"
+
+- name: Set table_prefix
+  set_fact:
+    table_prefix: "{{hostvars[item]['table_prefix']}}"
+  with_items: "{{ project }}.stgin.com"
+
 - name: Ensure nginx and mysql is running
   service:
     name: "{{ item }}"
