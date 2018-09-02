@@ -1,0 +1,5 @@
+---
+- name: Delete project.tgz
+  file:
+    path: /tmp/project.tgz
+    state: absent

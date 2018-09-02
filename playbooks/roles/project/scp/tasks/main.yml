@@ -1,0 +1,6 @@
+---
+- name: Download project
+  shell: "rsync -r -v --progress  -e 'ssh -i ~/.ssh/id_rsa' {{ aws_username }}@{{ project }}.stgin.com:/tmp/project.tgz ./ > /dev/tty"
+  args:
+    chdir: "/var/www/{{ project }}/"
+  become: true

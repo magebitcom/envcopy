@@ -1,0 +1,5 @@
+---
+- name: Archive media
+  archive:
+    path: /var/www/staging/www
+    dest: /tmp/project.tgz
