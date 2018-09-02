@@ -29,10 +29,6 @@
 - name: Print username
   debug: var=username_on_the_host.stdout
 
-- name: Set local media path
-  set_fact:
-    media_path_local: "{% if project_type == 'm2' %}/var/www/{{ project }}/pub/media{% else %}/var/www/{{ project }}/media{% endif %}"
-
 - name: Create project directories
   file:
     path: "{{ item }}"
@@ -46,7 +42,6 @@
     - "/var/www/{{ project }}/logs"
     - "/var/www/{{ project }}/sql"
     - "/var/www/{{ project }}/app/etc"
-    - "{{ media_path_local }}"
   become: yes
 
 - name: Create nginx vhost
