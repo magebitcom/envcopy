@@ -1,4 +1,4 @@
 - name: Download mysqldump to project dir
-  shell: "rsync -r -v --progress  -e 'ssh -i ~/.ssh/id_rsa' {{ aws_username }}@{{ project }}.stgin.com:/tmp/web.sql ./ > /dev/tty"
+  shell: "rsync -r -v --progress  -e 'ssh -i {{ aws_private_key_path }}' {{ aws_username }}@{{ project }}.stgin.com:/tmp/web.sql ./ > /dev/tty"
   args:
     chdir: "/var/www/{{ project }}/sql/"

@@ -4,7 +4,7 @@
     media_path_local: "{% if project_type == 'm2' %}/var/www/{{ project }}/pub/media/{% else %}/var/www/{{ project }}/media/{% endif %}"
 
 - name: Download media to project dir
-  shell: "rsync -r -v --progress  -e 'ssh -i ~/.ssh/id_rsa' {{ aws_username }}@{{ project }}.stgin.com:/tmp/media.tgz ./ > /dev/tty"
+  shell: "rsync -r -v --progress  -e 'ssh -i {{ aws_private_key_path }}' {{ aws_username }}@{{ project }}.stgin.com:/tmp/media.tgz ./ > /dev/tty"
   args:
     chdir: "{{ media_path_local }}"
   become: true
