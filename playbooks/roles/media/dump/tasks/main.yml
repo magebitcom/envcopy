@@ -1,9 +1,0 @@
----
-- name: Set media path
-  set_fact:
-    media_path: "{% if project_type == 'm2' %}/var/www/staging/www/pub/media/*{% else %}/var/www/staging/www/media/*{% endif %}"
-
-- name: Archive media
-  archive:
-    path: "{{ media_path }}"
-    dest: /tmp/media.tgz

@@ -24,7 +24,7 @@
   gather_facts: true
   roles:
      - mysql/dump
-     - media/dump
+     - project/dump
      - configs
     
 - hosts: localhost
@@ -33,8 +33,8 @@
   roles:
      - mysql/scp
      - mysql/restore
-     - media/scp
-     - media/restore
+     - project/scp
+     - project/restore
      - own
 
 - hosts: ec2host
@@ -43,5 +43,5 @@
   gather_facts: true
   roles:
      - mysql/remove
-     - media/remove
+     - project/remove
 

@@ -1,5 +1,0 @@
----
-- name: Delete media.tgz
-  file:
-    path: /tmp/media.tgz
-    state: absent
