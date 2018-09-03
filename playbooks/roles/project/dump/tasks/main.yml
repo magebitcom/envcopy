@@ -1,5 +1,5 @@
 ---
 - name: Archive project
   archive:
-    path: /var/www/staging/www
+    path: /var/www/staging/www/
     dest: /tmp/project.tgz

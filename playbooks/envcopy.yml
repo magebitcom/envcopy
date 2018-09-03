@@ -25,7 +25,6 @@
   roles:
      - mysql/dump
      - project/dump
-     - configs
     
 - hosts: localhost
   connection: local
@@ -42,6 +41,7 @@
   become: true
   gather_facts: true
   roles:
+     - configs
      - mysql/remove
      - project/remove
 
