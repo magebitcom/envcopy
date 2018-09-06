@@ -5,3 +5,4 @@
     owner: www-data
     group: www-data
     recurse: true
+  become: true
