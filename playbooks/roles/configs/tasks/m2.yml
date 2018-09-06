@@ -2,7 +2,7 @@
 - name: Download configs to project dir
   fetch:
     src: "/var/www/staging/www/app/etc/{{ item }}"
-    dest: "/var/www/{{ project }}/app/etc/"
+    dest: "/var/www/{{ project }}/public/app/etc/"
     flat: yes
   with_items:
     - config.php
@@ -11,13 +11,13 @@
 - name: Replace MySQL host value
   local_action:
     module: lineinfile
-    path: "/var/www/{{ project }}/app/etc/env.php"
+    path: "/var/www/{{ project }}/public/app/etc/env.php"
     regexp: "'host' => '"
     line: "                'host' => 'localhost:3306',"
   
 - name: Replace DB name
   local_action:
     module: replace
-    path: "/var/www/{{ project }}/app/etc/env.php"
-    regexp: 'staging'
+    path: "/var/www/{{ project }}/public/app/etc/env.php"
+    regexp: "{{ mysql_db }}"
     replace: "{{ project | replace('-','_') }}"
