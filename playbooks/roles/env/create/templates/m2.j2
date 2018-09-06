@@ -2,7 +2,7 @@ server {
     listen 80;
     listen [::]:80;
   
-    root /var/www/{{ project }};
+    root /var/www/{{ project }}/public;
  
     index index.php index.html index.htm index.nginx-debian.html;
     server_name {{ project }}.local;

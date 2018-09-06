@@ -2,5 +2,5 @@
 - name: Unarchive project.tgz
   shell: tar xzvf project.tgz
   args: 
-    chdir: "/var/www/{{ project }}/"
+    chdir: "/var/www/{{ project }}/public/"
   become: true
