@@ -4,3 +4,8 @@
   args: 
     chdir: "/var/www/{{ project }}/public/"
   become: true
+
+- name: Delete project dump
+  file:
+    path: "/var/www/{{ project }}/public/project.tgz"
+    state: absent
