@@ -31,13 +31,13 @@
     msg: "{{ mysql_db }}"
 
 - name: Get mysql table prefix
-  shell: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ mysql_db }} -e \"show tables like '%core_config_data%'\" | grep 'core_config_data' | tail -n 1 | sed 's/core_config_data//g'" 
+  shell: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ mysql_db }} -e \"show tables like '%core_cache_option%'\" | grep 'core_cache_option' | tail -n 1 | sed 's/core_cache_option//g'" 
   register: mysql_table_prefix
 
 - name: Set table_prefix
   set_fact:
     table_prefix: "{{ mysql_table_prefix.stdout }}"
 
-- name: Echo table_repfix
+- name: Echo table_prefix
   debug:
     msg: "{{ table_prefix }}"
