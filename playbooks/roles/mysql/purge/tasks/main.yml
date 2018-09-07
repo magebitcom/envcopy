@@ -1,3 +1,3 @@
 ---
 - name: Drop mysql database
-  command: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} -e 'DROP DATABASE {{ project | replace('-','_') }};'"
+  command: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} -e 'DROP DATABASE {{ project | replace('-','_') }} IF EXISTS;'"
