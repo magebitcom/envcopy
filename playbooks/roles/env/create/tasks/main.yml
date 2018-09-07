@@ -41,7 +41,7 @@
     - "/var/www/{{ project }}/public"
     - "/var/www/{{ project }}/logs"
     - "/var/www/{{ project }}/sql"
-    - "/var/www/{{ project }}/app/etc"
+    - "/var/www/{{ project }}/public/app/etc"
   become: yes
 
 - name: Create nginx vhost
