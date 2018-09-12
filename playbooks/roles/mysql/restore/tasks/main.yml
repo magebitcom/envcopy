@@ -14,6 +14,9 @@
 - name: Replace cookie domain
   command: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = '{{ project }}.local' where path = 'web/cookie/cookie_domain';\""
 
+- name: Disable sign static
+  command: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'dev/static/sign';\""
+
 - name: Delete MySQL dump
   file:
     path: "/var/www/{{ project }}/sql/web.sql"
