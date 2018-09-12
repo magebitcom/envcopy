@@ -17,10 +17,20 @@
   when: project_type == "m2"
   register: mysql_db_name_m2
 
+- name: Get mysql table_prefix from m2 project
+  shell: "cat /var/www/staging/www/app/etc/env.php | grep table_prefix | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  when: project_type == "m2"
+  register: mysql_table_prefix_m2
+
 - name: Get mysql db name from m1 project
   shell: "cat /var/www/staging/www/app/etc/local.xml | grep dbname | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\""
   when: project_type == "m1"
   register: mysql_db_name_m1
+
+- name: Get mysql db name from m1 project
+  shell: "cat /var/www/staging/www/app/etc/local.xml | grep table_prefix | sed \"s/ //g\" | sed \"s/]]><\\/table_prefix>//g\" | sed \"s/<table_prefix><\\!\\[CDATA\\[//g\""
+  when: project_type == "m1"
+  register: mysql_table_prefix_m1
 
 - name: Set mysql_db for m1
   set_fact:
@@ -36,13 +46,15 @@
   debug:
     msg: "{{ mysql_db }}"
 
-- name: Get mysql table prefix
-  shell: "mysql -u{{ mysql_user }} -p{{ mysql_pass }} {{ mysql_db }} -e \"show tables like '%core_cache_option%'\" | grep 'core_cache_option' | tail -n 1 | sed 's/core_cache_option//g'" 
-  register: mysql_table_prefix
-
-- name: Set table_prefix
+- name: Set table_prefix for m2
   set_fact:
-    table_prefix: "{{ mysql_table_prefix.stdout }}"
+    table_prefix: "{{ mysql_table_prefix_m2.stdout }}"
+  when: project_type == "m2"
+
+- name: Set table_prefix for m1
+  set_fact:
+    table_prefix: "{{ mysql_table_prefix_m1.stdout }}"
+  when: project_type == "m1"
 
 - name: Echo table_prefix
   debug:
