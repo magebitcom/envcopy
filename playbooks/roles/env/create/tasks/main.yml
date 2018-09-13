@@ -14,6 +14,12 @@
     table_prefix: "{{hostvars[item]['table_prefix']}}"
   with_items: "{{ project }}.stgin.com"
 
+- name: Set php_version
+  set_fact:
+    php_version: "{{hostvars[item]['php_version']}}"
+  with_items: "{{ project }}.stgin.com"
+  when: project_type == "m2"
+
 - name: Ensure nginx and mysql is running
   service:
     name: "{{ item }}"

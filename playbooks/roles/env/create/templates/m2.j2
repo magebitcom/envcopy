@@ -16,7 +16,7 @@ server {
  
     location ~* ^/setup($|/) {
             location ~ ^/setup/index.php {
-                fastcgi_pass   unix:/var/run/php/php7.0-fpm.sock;
+                fastcgi_pass   unix:/var/run/php/{{ php_version }}.sock;
                 fastcgi_index  index.php;
                 fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
                 include        fastcgi_params;
@@ -34,7 +34,7 @@ server {
     location ~* ^/update($|/) {
             location ~ ^/update/index.php {
                 fastcgi_split_path_info ^(/update/index.php)(/.+)$;
-                fastcgi_pass   unix:/var/run/php/php7.0-fpm.sock;
+                fastcgi_pass   unix:/var/run/php/{{ php_version }}.sock;
                 fastcgi_index  index.php;
                 fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
                 fastcgi_param  PATH_INFO        $fastcgi_path_info;
@@ -129,7 +129,7 @@ server {
     # PHP entry point for main application
     location ~ (index|get|static|report|404|503)\.php$ {
         try_files $uri =404;
-        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_pass unix:/var/run/php/{{ php_version }}.sock;
         fastcgi_buffers 1024 4k;
         fastcgi_param  PHP_FLAG  "session.auto_start=off \n suhosin.session.cryptua=off";
         fastcgi_read_timeout 600s;
