@@ -1,4 +1,9 @@
 ---
+- name: Set project_root
+  set_fact:
+    project_root: "{{hostvars[item]['project_root']}}"
+  with_items: "{{ project }}.stgin.com"
+
 - name: Set project_type
   set_fact:
     project_type: "{{hostvars[item]['project_type']}}"

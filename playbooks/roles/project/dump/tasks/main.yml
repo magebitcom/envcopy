@@ -1,18 +1,18 @@
 ---
 - name: Archive m1 project
   archive:
-    path: /var/www/staging/www/
+    path: "{{ project_root }}/"
     dest: /tmp/project.tgz
     exclude_path:
-    - /var/www/staging/www/var
-    - /var/www/staging/www/includes/src
+    - "{{ project_root }}/var"
+    - "{{ project_root }}/includes/src"
   when: project_type == 'm1'
 
 - name: Archive m2 project
   archive:
-    path: /var/www/staging/www/
+    path: "{{ project_root }}/"
     dest: /tmp/project.tgz
     exclude_path:
-    - /var/www/staging/www/var
-    - /var/www/staging/www/vendor
+    - "{{ project_root }}/var"
+    - "{{ project_root }}/vendor"
   when: project_type == 'm2'

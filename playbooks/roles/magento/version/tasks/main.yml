@@ -1,7 +1,19 @@
 ---
+- name: Get project_root
+  shell: "cat /etc/nginx/sites-enabled/{{ project }}.stgin.com | grep 'root ' | sed 's/root//g' | sed 's/ //g' | sed 's/;//g'"
+  register: project_root_dir
+
+- name: Set project_root
+  set_fact:
+    project_root: "{{ project_root_dir.stdout }}"
+
+- name: Echo project_root
+  debug:
+    msg: "{{ project_root }}"
+
 - name: Check magento version
   stat:
-    path: "/var/www/staging/www/app/etc/local.xml"
+    path: "{{ project_root }}/app/etc/local.xml"
   register: stat_result
 
 - name: Set project_type
@@ -13,22 +25,22 @@
     msg: "{{ project_type }}"
 
 - name: Get mysql db name from m2 project
-  shell: "cat /var/www/staging/www/app/etc/env.php | grep dbname | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  shell: "cat {{ project_root }}/app/etc/env.php | grep dbname | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
   when: project_type == "m2"
   register: mysql_db_name_m2
 
 - name: Get mysql table_prefix from m2 project
-  shell: "cat /var/www/staging/www/app/etc/env.php | grep table_prefix | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  shell: "cat {{ project_root }}/app/etc/env.php | grep table_prefix | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
   when: project_type == "m2"
   register: mysql_table_prefix_m2
 
 - name: Get mysql db name from m1 project
-  shell: "cat /var/www/staging/www/app/etc/local.xml | grep dbname | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\""
+  shell: "cat {{ project_root }}/app/etc/local.xml | grep dbname | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\""
   when: project_type == "m1"
   register: mysql_db_name_m1
 
 - name: Get mysql db name from m1 project
-  shell: "cat /var/www/staging/www/app/etc/local.xml | grep table_prefix | sed \"s/ //g\" | sed \"s/]]><\\/table_prefix>//g\" | sed \"s/<table_prefix><\\!\\[CDATA\\[//g\""
+  shell: "cat {{ project_root }}/app/etc/local.xml | grep table_prefix | sed \"s/ //g\" | sed \"s/]]><\\/table_prefix>//g\" | sed \"s/<table_prefix><\\!\\[CDATA\\[//g\""
   when: project_type == "m1"
   register: mysql_table_prefix_m1
 
