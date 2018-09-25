@@ -14,6 +14,17 @@
     mysql_db: "{{hostvars[item]['mysql_db']}}"
   with_items: "{{ project }}.stgin.com"
 
+- name: Set mysql_user
+  set_fact:
+    mysql_user: "{{hostvars[item]['mysql_user']}}"
+  with_items: "{{ project }}.stgin.com"
+
+
+- name: Set mysql_pass
+  set_fact:
+    mysql_pass: "{{hostvars[item]['mysql_pass']}}"
+  with_items: "{{ project }}.stgin.com"
+
 - name: Set table_prefix
   set_fact:
     table_prefix: "{{hostvars[item]['table_prefix']}}"

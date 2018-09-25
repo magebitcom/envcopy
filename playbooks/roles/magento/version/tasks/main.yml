@@ -1,6 +1,6 @@
 ---
 - name: Get project_root
-  shell: "cat /etc/nginx/sites-enabled/{{ project }}.stgin.com | grep 'root ' | sed 's/root//g' | sed 's/ //g' | sed 's/;//g'"
+  shell: "cat /etc/nginx/sites-enabled/{{ project }}.stgin.com | grep -e 'MAGE_ROOT' -e 'root' | grep var | awk '{print $NF}' | sed 's/;//g'"
   register: project_root_dir
 
 - name: Set project_root
@@ -29,6 +29,16 @@
   when: project_type == "m2"
   register: mysql_db_name_m2
 
+- name: Get mysql user from m2 project
+  shell: "cat {{ project_root }}/app/etc/env.php | grep username | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  when: project_type == "m2"
+  register: mysql_user_m2
+
+- name: Get mysql pass from m2 project
+  shell: "cat {{ project_root }}/app/etc/env.php | grep password | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  when: project_type == "m2"
+  register: mysql_pass_m2
+
 - name: Get mysql table_prefix from m2 project
   shell: "cat {{ project_root }}/app/etc/env.php | grep table_prefix | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
   when: project_type == "m2"
@@ -39,7 +49,17 @@
   when: project_type == "m1"
   register: mysql_db_name_m1
 
-- name: Get mysql db name from m1 project
+- name: Get mysql user from m1 project
+  shell: "cat {{ project_root }}/app/etc/local.xml | grep username | sed \"s/ //g\" | sed \"s/]]><\\/username>//g\" | sed \"s/<username><\\!\\[CDATA\\[//g\""
+  when: project_type == "m1"
+  register: mysql_user_m1
+
+- name: Get mysql pass from m1 project
+  shell: "cat {{ project_root }}/app/etc/local.xml | grep password | sed \"s/ //g\" | sed \"s/]]><\\/password>//g\" | sed \"s/<password><\\!\\[CDATA\\[//g\""
+  when: project_type == "m1"
+  register: mysql_pass_m1
+
+- name: Get mysql table_prefix from m1 project
   shell: "cat {{ project_root }}/app/etc/local.xml | grep table_prefix | sed \"s/ //g\" | sed \"s/]]><\\/table_prefix>//g\" | sed \"s/<table_prefix><\\!\\[CDATA\\[//g\""
   when: project_type == "m1"
   register: mysql_table_prefix_m1
@@ -49,24 +69,52 @@
     mysql_db: "{{ mysql_db_name_m1.stdout }}"
   when: project_type == "m1"
 
+- name: Set mysql_user for m1
+  set_fact:
+    mysql_user: "{{ mysql_user_m1.stdout }}"
+  when: project_type == "m1"
+
+- name: Set mysql_pass for m1
+  set_fact:
+    mysql_pass: "{{ mysql_pass_m1.stdout }}"
+  when: project_type == "m1"
+
+- name: Set table_prefix for m1
+  set_fact:
+    table_prefix: "{{ mysql_table_prefix_m1.stdout }}"
+  when: project_type == "m1"
+
 - name: Set mysql_db for m2
   set_fact:
     mysql_db: "{{ mysql_db_name_m2.stdout }}"
   when: project_type == "m2"
 
-- name: Echo mysql_db
-  debug:
-    msg: "{{ mysql_db }}"
+- name: Set mysql_user for m2
+  set_fact:
+    mysql_user: "{{ mysql_user_m2.stdout }}"
+  when: project_type == "m2"
+
+- name: Set mysql_pass for m2
+  set_fact:
+    mysql_pass: "{{ mysql_pass_m2.stdout }}"
+  when: project_type == "m2"
 
 - name: Set table_prefix for m2
   set_fact:
     table_prefix: "{{ mysql_table_prefix_m2.stdout }}"
   when: project_type == "m2"
 
-- name: Set table_prefix for m1
-  set_fact:
-    table_prefix: "{{ mysql_table_prefix_m1.stdout }}"
-  when: project_type == "m1"
+- name: Echo mysql_db
+  debug:
+    msg: "{{ mysql_db }}"
+
+- name: Echo mysql_user
+  debug:
+    msg: "{{ mysql_user }}"
+
+- name: Echo mysql_pass
+  debug:
+    msg: "{{ mysql_pass }}"
 
 - name: Echo table_prefix
   debug:
