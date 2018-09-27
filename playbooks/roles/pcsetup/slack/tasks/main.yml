@@ -1,0 +1,8 @@
+---
+- name: install snapd
+  apt:
+    name: snapd
+    state: present
+
+- name: install slack
+  command: snap install slack --classic

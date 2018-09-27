@@ -6,3 +6,5 @@
   roles:
      - pcsetup/nginx
      - pcsetup/percona-server
+     - pcsetup/guake
+     - pcsetup/slack
