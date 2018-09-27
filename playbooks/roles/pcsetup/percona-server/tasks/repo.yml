@@ -1,0 +1,19 @@
+---
+# file: tasks/repo.tml
+
+- name: download percona package deb
+  get_url:
+    url: "https://repo.percona.com/apt/percona-release_0.1-5.stretch_all.deb"
+    dest: "/tmp/percona-release_0.1-5.stretch_all.deb"
+
+- name: install percona deb
+  command: "dpkg -i /tmp/percona-release_0.1-5.stretch_all.deb"
+
+- name: delete percona deb
+  file: 
+    path: /tmp/percona-release_0.1-5.stretch_all.deb
+    state: absent
+
+- name: Update apt cache
+  apt: update_cache=yes
+
