@@ -5,6 +5,7 @@
   become: true
   roles:
      - pcsetup/nginx
+     - pcsetup/php
      - pcsetup/percona-server
      - pcsetup/guake
      - pcsetup/slack
