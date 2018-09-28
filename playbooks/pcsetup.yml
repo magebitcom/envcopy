@@ -8,3 +8,5 @@
      - pcsetup/percona-server
      - pcsetup/guake
      - pcsetup/slack
+     - pcsetup/phpstorm
+     - pcsetup/chrome
