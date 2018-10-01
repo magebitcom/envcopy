@@ -14,5 +14,5 @@
 - name: Check disk space
   assert:
     that: "{{ mysql_size.stdout }} + {{ project_size.stdout }} < {{ available_disk_space.stdout }}"
-    msg: not enough disk space to copy project.
+    msg: Not enough disk space to copy project. Cleanup your project or resize disk.
   
