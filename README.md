@@ -28,7 +28,3 @@ Installation:
 	1. ansible
 		sudo apt-get install python-pip python-dev -y
 		sudo -H pip install ansible==2.4.1.0
-	2. nginx
-		sudo apt-get install nginx -y
-	3. MySQL
-		sudo apt-get install percona-server-server-5.6 -y
