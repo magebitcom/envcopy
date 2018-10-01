@@ -2,7 +2,7 @@
 - name: Archive m1 project
   archive:
     path: "{{ project_root }}/"
-    dest: /tmp/project.tgz
+    dest: "/envcopy/project_{{ project }}.tgz"
     exclude_path:
     - "{{ project_root }}/var"
     - "{{ project_root }}/includes/src"
@@ -11,7 +11,7 @@
 - name: Archive m2 project
   archive:
     path: "{{ project_root }}/"
-    dest: /tmp/project.tgz
+    dest: "/envcopy/project_{{ project }}.tgz"
     exclude_path:
     - "{{ project_root }}/var"
     - "{{ project_root }}/vendor"

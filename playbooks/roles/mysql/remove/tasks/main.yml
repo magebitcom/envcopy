@@ -1,4 +1,4 @@
 - name: Delete dump
   file:
-    path: /tmp/web.sql
+    path: "/envcope/web_{{ project }}.sql"
     state: absent

@@ -10,7 +10,7 @@
   become: true
   gather_facts: true
   roles:
-     - check
+     - nfs/mount
      - magento/version
 
 - hosts: localhost
@@ -46,4 +46,5 @@
      - configs
      - mysql/remove
      - project/remove
+     - nfs/umount
 
