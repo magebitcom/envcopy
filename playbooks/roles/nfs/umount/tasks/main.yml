@@ -1,3 +1,4 @@
 ---
 - name: umount NFS
   shell: umount /envcopy
+  ignore_errors: true
