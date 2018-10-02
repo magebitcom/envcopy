@@ -3,6 +3,7 @@
   connection: local
   gather_facts: false
   roles:
+     - pcsetup/screen/turnoff
      - register-ec2host
 
 - hosts: ec2host
@@ -41,6 +42,7 @@
      - role: project/restore
        when: project_dump == 'true'
      - own
+     - pcsetup/screen/turnon
 
 - hosts: ec2host
   remote_user: "{{ aws_username }}"
