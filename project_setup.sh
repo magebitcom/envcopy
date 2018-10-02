@@ -4,6 +4,7 @@ echo -n "Define project name without .stgin.com domain name [example: projectx]:
 read project
 
 #################################################################################
+export ANSIBLE_HOST_KEY_CHECKING=False
 if [[ "$project_dump" == "--ignore-media" ]] 
 then
   ./ansible-playbook -K -i localhost, playbooks/envcopy.yml -e project=$project -e project_dump='false'
