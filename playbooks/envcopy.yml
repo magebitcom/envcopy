@@ -27,7 +27,8 @@
   gather_facts: true
   roles:
      - mysql/dump
-     - project/dump
+     - role: project/dump
+       when: project_dump == 'true'
     
 - hosts: localhost
   connection: local
@@ -35,8 +36,10 @@
   roles:
      - mysql/scp
      - mysql/restore
-     - project/scp
-     - project/restore
+     - role: project/scp
+       when: project_dump == 'true'
+     - role: project/restore
+       when: project_dump == 'true'
      - own
 
 - hosts: ec2host
@@ -46,6 +49,7 @@
   roles:
      - configs
      - mysql/remove
-     - project/remove
+     - role: project/remove
+       when: project_dump == 'true'
      - nfs/umount
 
