@@ -28,8 +28,7 @@
   gather_facts: true
   roles:
      - mysql/dump
-     - role: project/dump
-       when: project_dump == 'true'
+     - project/dump
     
 - hosts: localhost
   connection: local
@@ -37,10 +36,8 @@
   roles:
      - mysql/scp
      - mysql/restore
-     - role: project/scp
-       when: project_dump == 'true'
-     - role: project/restore
-       when: project_dump == 'true'
+     - project/scp
+     - project/restore
      - own
      - pcsetup/screen/turnon
 
@@ -51,7 +48,6 @@
   roles:
      - configs
      - mysql/remove
-     - role: project/remove
-       when: project_dump == 'true'
+     - project/remove
      - nfs/umount
 

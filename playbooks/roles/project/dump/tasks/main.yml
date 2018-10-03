@@ -1,4 +1,22 @@
 ---
+- name: Archive m1 project without media
+  archive:
+    path: "{{ project_root }}/"
+    dest: "/envcopy/project_{{ project }}.tgz"
+    exclude_path:
+    - "{{ project_root }}/var"
+    - "{{ project_root }}/includes/src"
+  when: project_type == 'm1' and media_dump == 'false'
+
+- name: Archive m2 project without media
+  archive:
+    path: "{{ project_root }}/"
+    dest: "/envcopy/project_{{ project }}.tgz"
+    exclude_path:
+    - "{{ project_root }}/var"
+    - "{{ project_root }}/vendor"
+  when: project_type == 'm2' and media_dump == 'false'
+
 - name: Archive m1 project
   archive:
     path: "{{ project_root }}/"
@@ -6,7 +24,7 @@
     exclude_path:
     - "{{ project_root }}/var"
     - "{{ project_root }}/includes/src"
-  when: project_type == 'm1'
+  when: project_type == 'm1' and media_dump == 'true'
 
 - name: Archive m2 project
   archive:
@@ -15,4 +33,4 @@
     exclude_path:
     - "{{ project_root }}/var"
     - "{{ project_root }}/vendor"
-  when: project_type == 'm2'
+  when: project_type == 'm2' and media_dump == 'true'
