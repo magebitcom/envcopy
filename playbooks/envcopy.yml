@@ -11,7 +11,6 @@
   become: true
   gather_facts: true
   roles:
-     - nfs/umount
      - nfs/mount
      - magento/version
 
@@ -49,5 +48,3 @@
      - configs
      - mysql/remove
      - project/remove
-     - nfs/umount
-

@@ -1,7 +1,7 @@
 ---
 - name: Archive m1 project without media
   archive:
-    path: "{{ project_root }}/"
+    path: "{{ project_root }}/*"
     dest: "/envcopy/project_{{ project }}.tgz"
     exclude_path:
     - "{{ project_root }}/var"
@@ -11,7 +11,7 @@
 
 - name: Archive m2 project without media
   archive:
-    path: "{{ project_root }}/"
+    path: "{{ project_root }}/*"
     dest: "/envcopy/project_{{ project }}.tgz"
     exclude_path:
     - "{{ project_root }}/var"
@@ -21,7 +21,7 @@
 
 - name: Archive m1 project
   archive:
-    path: "{{ project_root }}/"
+    path: "{{ project_root }}/*"
     dest: "/envcopy/project_{{ project }}.tgz"
     exclude_path:
     - "{{ project_root }}/var"
@@ -30,7 +30,7 @@
 
 - name: Archive m2 project
   archive:
-    path: "{{ project_root }}/"
+    path: "{{ project_root }}/*"
     dest: "/envcopy/project_{{ project }}.tgz"
     exclude_path:
     - "{{ project_root }}/var"

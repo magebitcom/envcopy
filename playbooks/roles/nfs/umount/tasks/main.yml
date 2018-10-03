@@ -1,4 +1,10 @@
 ---
+- name: check mount point /envcopy
+  command: mountpoint /envcopy
+  register: mount_stat
+  failed_when: False
+  changed_when: False
+
 - name: umount NFS
   shell: umount /envcopy
-  ignore_errors: true
+  when: mount_stat.stdout != '/envcopy is not a mountpoint'
