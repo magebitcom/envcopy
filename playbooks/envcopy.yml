@@ -32,6 +32,7 @@
 - hosts: localhost
   connection: local
   gather_facts: false
+  become: true
   roles:
      - mysql/scp
      - mysql/restore
