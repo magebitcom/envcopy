@@ -1,4 +1,9 @@
 ---
+- name: Execute git gc
+  shell: git gc
+  args:
+    chdir: "{{ project_root }}/"
+
 - name: Archive m1 project without media
   archive:
     path: "{{ project_root }}/."
