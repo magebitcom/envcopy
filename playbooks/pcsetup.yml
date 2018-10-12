@@ -4,6 +4,7 @@
   gather_facts: true
   become: true
   roles:
+     - pcsetup/screen/turnoff
      - pcsetup/nginx
      - pcsetup/php
      - pcsetup/percona-server
@@ -11,3 +12,4 @@
      - pcsetup/slack
      - pcsetup/phpstorm
      - pcsetup/chrome
+     - pcsetup/screen/turnon
