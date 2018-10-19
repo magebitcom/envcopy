@@ -2,7 +2,7 @@
 echo -n "Define AWS SSH username: "
 read aws_username
 
-echo -n "Define AWS SSH private_key[default: /home/username/.ssh/id_rsa]: "
+echo -n "Define AWS SSH private_key[default: $HOME/.ssh/id_rsa]: "
 read aws_private_key_path
 [ ! -z "$aws_private_key_path" ] || aws_private_key_path="$HOME/.ssh/id_rsa"
 #################################################################################
