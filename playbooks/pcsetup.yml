@@ -12,4 +12,5 @@
      - pcsetup/slack
      - pcsetup/phpstorm
      - pcsetup/chrome
+     - pcsetup/screen/launcher
      - pcsetup/screen/turnon
