@@ -55,7 +55,7 @@
   register: mysql_user_m1
 
 - name: Get mysql pass from m1 project
-  shell: "cat {{ project_root }}/app/etc/local.xml | grep password | sed \"s/ //g\" | sed \"s/]]><\\/password>//g\" | sed \"s/<password><\\!\\[CDATA\\[//g\""
+  shell: "cat {{ project_root }}/app/etc/local.xml | grep password | head -n1 | sed \"s/ //g\" | sed \"s/]]><\\/password>//g\" | sed \"s/<password><\\!\\[CDATA\\[//g\""
   when: project_type == "m1"
   register: mysql_pass_m1
 
