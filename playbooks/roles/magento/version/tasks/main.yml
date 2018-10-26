@@ -123,6 +123,7 @@
 - name: Get php version for m2 project
   shell: "cat /etc/nginx/sites-enabled/{{ project }}.stgin.com | grep php7.0"
   when: project_type == "m2"
+  ignore_errors: true
   register: php_version_m2
 
 - name: Set php_version
