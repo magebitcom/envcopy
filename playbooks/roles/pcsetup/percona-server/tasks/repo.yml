@@ -3,15 +3,15 @@
 
 - name: download percona package deb
   get_url:
-    url: "https://repo.percona.com/apt/percona-release_0.1-6.xenial_all.deb"
-    dest: "/tmp/percona-release_0.1-6.xenial_all.deb"
+    url: "https://repo.percona.com/apt/percona-release_0.1-6.{{ ansible_distribution_release }}_all.deb"
+    dest: "/tmp/percona-release_0.1-6.{{ ansible_distribution_release }}_all.deb"
 
 - name: install percona deb
-  command: "dpkg -i /tmp/percona-release_0.1-6.xenial_all.deb"
+  command: "dpkg -i /tmp/percona-release_0.1-6.{{ ansible_distribution_release }}_all.deb"
 
 - name: delete percona deb
   file: 
-    path: /tmp/percona-release_0.1-6.xenial_all.deb
+    path: "/tmp/percona-release_0.1-6.{{ ansible_distribution_release }}_all.deb"
     state: absent
 
 - name: Update apt cache

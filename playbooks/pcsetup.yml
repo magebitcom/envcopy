@@ -12,5 +12,5 @@
      - pcsetup/slack
      - pcsetup/phpstorm
      - pcsetup/chrome
-     - pcsetup/screen/launcher
+     - { role: pcsetup/screen/launcher, when: ansible_distribution == "Ubuntu" and ansible_distribution_version == '16.04' }
      - pcsetup/screen/turnon
