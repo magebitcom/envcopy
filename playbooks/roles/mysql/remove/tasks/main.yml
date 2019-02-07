@@ -1,4 +1,4 @@
 - name: Delete dump
   file:
-    path: "/envcope/web_{{ project }}.sql.gz"
+    path: "/envcopy/web_{{ project }}.sql.gz"
     state: absent
