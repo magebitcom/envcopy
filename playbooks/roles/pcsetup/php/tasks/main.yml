@@ -7,7 +7,7 @@
 - name: Add repository for PHP 5 compatibility packages (Ubuntu).
   apt_repository: repo='ppa:ondrej/php5-compat'
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Ubuntu" and ansible_distribution_version == '16.04'
 
 - name: Add dependencies for PHP versions (Debian).
   apt:
