@@ -41,7 +41,7 @@
 
 - name: Prompt for db
   pause:
-    prompt: Select project database from previous step
+    prompt: ACTION NEEDED! Select project database from previous step - Print databases:"
   register: mysql_db_name_m2_prompt
   when: project_type == "m2" and mysql_db_count_m2.stdout > 1
 
@@ -87,7 +87,7 @@
 
 - name: Prompt for db
   pause:
-    prompt: Select project database from previous step
+    prompt: ACTION NEEDED! Select project database from previous step - Print databases:
   register: mysql_db_name_m1_prompt
   when: project_type == "m1" and mysql_db_count_m1.stdout > 1
 
