@@ -24,39 +24,18 @@
   debug:
     msg: "{{ project_type }}"
 
-- name: Get DB count
-  shell: "cat {{ project_root }}/app/etc/env.php | grep dbname | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\" | wc -l"
-  when: project_type == "m2"
-  register: mysql_db_count_m2
-
-- name: Register databases
-  shell: "cat {{ project_root }}/app/etc/env.php | grep dbname | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
-  when: project_type == "m2" and mysql_db_count_m2.stdout > 1
-  register: multiple_mysql_dbs
-
-- name: Print databases
-  debug:
-    msg: "Databases: {{ multiple_mysql_dbs.stdout.split('\n') }}"
-  when: project_type == "m2" and mysql_db_count_m2.stdout > 1 
-
-- name: Prompt for db
-  pause:
-    prompt: ACTION NEEDED! Select project database from previous step - Print databases:"
-  register: mysql_db_name_m2_prompt
-  when: project_type == "m2" and mysql_db_count_m2.stdout > 1
-
 - name: Get mysql db name from m2 project
-  shell: "cat {{ project_root }}/app/etc/env.php | grep dbname | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
-  when: project_type == "m2" and mysql_db_count_m2.stdout == 1
+  shell: "cat {{ project_root }}/app/etc/env.php | grep dbname | head -n1 | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  when: project_type == "m2"
   register: mysql_db_name_m2
 
 - name: Get mysql user from m2 project
-  shell: "cat {{ project_root }}/app/etc/env.php | grep username | uniq | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  shell: "cat {{ project_root }}/app/etc/env.php | grep username | head -n1 | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
   when: project_type == "m2"
   register: mysql_user_m2
 
 - name: Get mysql pass from m2 project
-  shell: "cat {{ project_root }}/app/etc/env.php | grep password | uniq | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  shell: "cat {{ project_root }}/app/etc/env.php | grep password | head -n1 | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
   when: project_type == "m2"
   register: mysql_pass_m2
 
@@ -66,34 +45,8 @@
   register: mysql_table_prefix_m2
 
 - name: Get mysql db name from m1 project
-  shell: "cat {{ project_root }}/app/etc/local.xml | grep dbname | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\""
+  shell: "cat {{ project_root }}/app/etc/local.xml | grep dbname | head -n1 | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\""
   when: project_type == "m1"
-  register: mysql_db_name_m1
-
-- name: Get DB count
-  shell: "cat {{ project_root }}/app/etc/local.xml | grep dbname | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\"| wc -l"
-  when: project_type == "m1"
-  register: mysql_db_count_m1
-
-- name: Register databases
-  shell: "cat {{ project_root }}/app/etc/local.xml | grep dbname | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\""
-  when: project_type == "m1" and mysql_db_count_m1.stdout > 1
-  register: multiple_mysql_dbs
-
-- name: Print databases
-  debug:
-    msg: "Databases: {{ multiple_mysql_dbs.stdout.split('\n') }}"
-  when: project_type == "m1" and mysql_db_count_m1.stdout > 1
-
-- name: Prompt for db
-  pause:
-    prompt: ACTION NEEDED! Select project database from previous step - Print databases:
-  register: mysql_db_name_m1_prompt
-  when: project_type == "m1" and mysql_db_count_m1.stdout > 1
-
-- name: Get mysql db name from m1 project
-  shell: "cat {{ project_root }}/app/etc/local.xml | grep dbname | sed \"s/ //g\" | sed \"s/]]><\\/dbname>//g\" | sed \"s/<dbname><\\!\\[CDATA\\[//g\""
-  when: project_type == "m1" and mysql_db_count_m1.stdout == 1
   register: mysql_db_name_m1
 
 - name: Get mysql pass from m1 project
@@ -109,12 +62,7 @@
 - name: Set mysql_db for m1
   set_fact:
     mysql_db: "{{ mysql_db_name_m1.stdout }}"
-  when: project_type == "m1" and mysql_db_count_m1.stdout == 1
-
-- name: Set mysql_db for m1
-  set_fact:
-    mysql_db: "{{ mysql_db_name_m1_prompt.user_input }}"
-  when: project_type == "m1" and mysql_db_count_m1.stdout > 1
+  when: project_type == "m1"
 
 - name: Set mysql_user for m1
   set_fact:
@@ -134,12 +82,7 @@
 - name: Set mysql_db for m2
   set_fact:
     mysql_db: "{{ mysql_db_name_m2.stdout }}"
-  when: project_type == "m2" and mysql_db_count_m2.stdout == 1
-
-- name: Set mysql_db for m2
-  set_fact:
-    mysql_db: "{{ mysql_db_name_m2_prompt.user_input }}"
-  when: project_type == "m2" and mysql_db_count_m2.stdout > 1
+  when: project_type == "m2"
 
 - name: Set mysql_user for m2
   set_fact:
@@ -156,21 +99,13 @@
     table_prefix: "{{ mysql_table_prefix_m2.stdout }}"
   when: project_type == "m2"
 
-- name: Echo mysql_db
+- name: Print DB settings
   debug:
-    msg: "{{ mysql_db }}"
-
-- name: Echo mysql_user
-  debug:
-    msg: "{{ mysql_user }}"
-
-- name: Echo mysql_pass
-  debug:
-    msg: "{{ mysql_pass }}"
-
-- name: Echo table_prefix
-  debug:
-    msg: "{{ table_prefix }}"
+    msg: 
+      - "mysql_db: {{ mysql_db }}"
+      - "mysql_user: {{ mysql_user }}"
+      - "mysql_pass: {{ mysql_pass }}"
+      - "table_prefix: {{ table_prefix }}"
 
 - name: Get php version for m2 project
   shell: "cat /etc/nginx/sites-enabled/{{ project }}.stgin.com | grep php7.0"
