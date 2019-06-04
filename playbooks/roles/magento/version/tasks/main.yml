@@ -49,6 +49,11 @@
   when: project_type == "m1"
   register: mysql_db_name_m1
 
+- name: Get mysql user from m1 project
+  shell: "cat {{ project_root }}/app/etc/local.xml | grep username | sed \"s/ //g\" | sed \"s/]]><\\/username>//g\" | sed \"s/<username><\\!\\[CDATA\\[//g\""
+  when: project_type == "m1"
+  register: mysql_user_m1
+
 - name: Get mysql pass from m1 project
   shell: "cat {{ project_root }}/app/etc/local.xml | grep password | head -n1 | sed \"s/ //g\" | sed \"s/]]><\\/password>//g\" | sed \"s/<password><\\!\\[CDATA\\[//g\""
   when: project_type == "m1"
