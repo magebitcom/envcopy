@@ -3,7 +3,7 @@
   command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} -e 'CREATE DATABASE IF NOT EXISTS {{ project | replace('-','_') }};'"
 
 - name: Unarchive database
-  shell: "gzip -d /var/www/{{ project }}/sql/web_{{ project }}.sql.gz"
+  shell: "gzip -f -d /var/www/{{ project }}/sql/web_{{ project }}.sql.gz"
 
 - name: Restore mysql database
   shell: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} < /var/www/{{ project }}/sql/web_{{ project }}.sql"
