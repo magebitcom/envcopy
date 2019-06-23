@@ -35,9 +35,6 @@
 - name: Disable JS merging, bundling and minification
   command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path like 'dev/js/%';\""
 
-- name: Disable sign static
-  command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'dev/static/sign';\""
-
 - name: Delete MySQL dump
   file:
     path: "/var/www/{{ project }}/sql/web_{{ project }}.sql"
