@@ -22,6 +22,7 @@
     exclude_path:
     - "{{ project_root }}/var"
     - "{{ project_root }}/vendor"
+    - "{{ project_root }}/generated"
     - "{{ project_root }}/pub/media"
     - "{{ project_root }}/pub/static"
   when: project_type == 'm2' and media_dump == 'false'
@@ -43,5 +44,6 @@
     exclude_path:
     - "{{ project_root }}/var"
     - "{{ project_root }}/vendor"
+    - "{{ project_root }}/generated"
     - "{{ project_root }}/pub/static"
   when: project_type == 'm2' and media_dump == 'true'
