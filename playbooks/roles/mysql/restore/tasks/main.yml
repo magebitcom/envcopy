@@ -14,8 +14,26 @@
 - name: Replace secure web URL
   command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 'http://{{ project }}.local/' where path = 'web/secure/base_url';\""
 
+- name: Disable secure use in frontend
+  command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'web/secure/use_in_frontend';\""
+
+- name: Disable secure use in adminhtml
+  command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'web/secure/use_in_adminhtml';\""
+
+- name: Disable insecure request upgrade
+  command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'web/secure/enable_upgrade_insecure';\""
+
+- name: Disable insecure hsts
+  command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'web/secure/enable_hsts';\""
+
 - name: Replace cookie domain
   command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = '{{ project }}.local' where path = 'web/cookie/cookie_domain';\""
+
+- name: Disable CSS merging and minification
+  command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path like 'dev/css/%';\""
+
+- name: Disable JS merging, bundling and minification
+  command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path like 'dev/js/%';\""
 
 - name: Disable sign static
   command: "mysql -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'dev/static/sign';\""
