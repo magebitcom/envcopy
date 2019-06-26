@@ -25,17 +25,17 @@
     msg: "{{ project_type }}"
 
 - name: Get mysql db name from m2 project
-  shell: "cat {{ project_root }}/app/etc/env.php | grep dbname | head -n1 | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  shell: "php -r \"echo((include '{{ project_root }}/app/etc/env.php')['db']['connection']['default']['dbname']);\""
   when: project_type == "m2"
   register: mysql_db_name_m2
 
 - name: Get mysql user from m2 project
-  shell: "cat {{ project_root }}/app/etc/env.php | grep username | head -n1 | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  shell: "php -r \"echo((include '{{ project_root }}/app/etc/env.php')['db']['connection']['default']['username']);\""
   when: project_type == "m2"
   register: mysql_user_m2
 
 - name: Get mysql pass from m2 project
-  shell: "cat {{ project_root }}/app/etc/env.php | grep password | head -n1 | awk '{print $3}' | sed \"s/'//g\" | sed \"s/,//g\""
+  shell: "php -r \"echo((include '{{ project_root }}/app/etc/env.php')['db']['connection']['default']['password']);\""
   when: project_type == "m2"
   register: mysql_pass_m2
 
