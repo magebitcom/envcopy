@@ -87,3 +87,7 @@
     path: /etc/hosts
     line: "127.0.0.1 {{ project }} {{ project }}.local"
   become: yes
+
+- name: Include vue tasks
+  include_tasks: vue.yml
+  when: vue_project is defined

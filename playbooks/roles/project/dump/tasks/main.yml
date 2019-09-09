@@ -27,3 +27,7 @@
   args:
     chdir: "{{ project_root }}"
   when: project_type == 'm2' and media_dump == 'true'
+
+- name: Include vue tasks
+  include_tasks: vue.yml
+  when: vue_project is defined

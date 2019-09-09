@@ -9,3 +9,7 @@
   file:
     path: "/var/www/{{ project }}/public/project_{{ project }}.tgz"
     state: absent
+
+- name: Include vue tasks
+  include_tasks: vue.yml
+  when: vue_project is defined

@@ -4,3 +4,7 @@
   args:
     chdir: "/var/www/{{ project }}/public/"
   become: true
+
+- name: Include vue tasks
+  include_tasks: vue.yml
+  when: vue_project is defined

@@ -1,0 +1,22 @@
+---
+- name: Unarchive project-vue.tgz
+  shell: "tar xzvf project_{{ project }}_vue.tgz"
+  args: 
+    chdir: "/var/www/{{ project }}/vue/"
+  become: true
+
+- name: Delete project-vue dump
+  file:
+    path: "/var/www/{{ project }}/public/project_{{ project }}_vue.tgz"
+    state: absent
+
+- name: Unarchive project-vue-api.tgz
+  shell: "tar xzvf project_{{ project }}_vue-api.tgz"
+  args:
+    chdir: "/var/www/{{ project }}/vue-api/"
+  become: true
+
+- name: Delete project-vue-api dump
+  file:
+    path: "/var/www/{{ project }}/public/project_{{ project }}_vue-api.tgz"
+    state: absent

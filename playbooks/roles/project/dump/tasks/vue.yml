@@ -1,0 +1,10 @@
+---
+- name: Archive vue project
+  shell: "tar --exclude=./config/local.json --exclude=./node_modules --exclude=./.git -zcvf /envcopy/project_{{ project }}_vue.tgz ."
+  args:
+    chdir: /var/www/staging/vue-storefront
+
+- name: Archive vue-api project
+  shell: "tar --exclude=./config/local.json --exclude=./node_modules --exclude=./.git -zcvf /envcopy/project_{{ project }}_vue-api.tgz ."
+  args:
+    chdir: /var/www/staging/vue-storefront-api
