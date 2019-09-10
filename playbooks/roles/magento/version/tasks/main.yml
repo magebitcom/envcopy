@@ -116,11 +116,17 @@
   shell: "cat /etc/nginx/sites-enabled/{{ project }}.stgin.com | grep php7.0"
   when: project_type == "m2"
   ignore_errors: true
-  register: php_version_m2
+  register: php_version_m2_70
+
+- name: Get php version for m2 project
+  shell: "cat /etc/nginx/sites-enabled/{{ project }}.stgin.com | grep php7.1"
+  when: project_type == "m2"
+  ignore_errors: true
+  register: php_version_m2_71
 
 - name: Set php_version
   set_fact:
-    php_version: "{% if php_version_m2.failed == False %}php7.0-fpm{% else %}php7.1-fpm{% endif %}"
+    php_version: "{% if php_version_m2_70.failed == False %}php7.0-fpm{% elif php_version_m2_71.failed == False %}php7.1-fpm{% else %}php7.2-fpm{% endif %}"
   when: project_type == "m2"  
 
 - name: Echo m2 project php_version
