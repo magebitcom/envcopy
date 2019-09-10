@@ -25,7 +25,7 @@ server {
 
         location /robots.txt {
                 index robots.txt;
-                alias /var/www/staging/magento/pub/;
+                alias /var/www/staging/www/pub/;
         }
 
         location /assets/manifest.json {
@@ -54,6 +54,6 @@ server {
     error_page 502 /502.html;
 
     location = /502.html {
-      root  /var/www/staging/magento;
+      root  /var/www/staging/www;
     }
 }
