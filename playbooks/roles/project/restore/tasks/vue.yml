@@ -7,7 +7,7 @@
 
 - name: Delete project-vue dump
   file:
-    path: "/var/www/{{ project }}/public/project_{{ project }}_vue.tgz"
+    path: "/var/www/{{ project }}/vue/project_{{ project }}_vue.tgz"
     state: absent
 
 - name: Unarchive project-vue-api.tgz
@@ -18,5 +18,5 @@
 
 - name: Delete project-vue-api dump
   file:
-    path: "/var/www/{{ project }}/public/project_{{ project }}_vue-api.tgz"
+    path: "/var/www/{{ project }}/vue-api/project_{{ project }}_vue-api.tgz"
     state: absent

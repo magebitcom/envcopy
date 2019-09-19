@@ -9,3 +9,10 @@
     - "/var/www/{{ project }}/vue"
     - "/var/www/{{ project }}/vue-api"
   become: yes
+
+- name: Create Makefile
+  template:
+    src: 'Makefile'
+    dest: "/var/www/{{ project }}/Makefile"
+    mode: 0644
+  become: yes
