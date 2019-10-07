@@ -52,4 +52,3 @@
     name: "{{ php7_1_packages }}"
     state: "{{ php_packages_state }}"
     install_recommends: "{{ php_install_recommends }}"
-
