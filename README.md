@@ -25,6 +25,6 @@ Local project purge:
 
 
 Installation:
-	1. ansible
-		sudo apt-get install python-pip python-dev -y
-		sudo -H pip install ansible==2.4.1.0
+
+	sudo apt-get install python-pip python-dev -y
+	sudo -H pip install ansible==2.4.1.0
