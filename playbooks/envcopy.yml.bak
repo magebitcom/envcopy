@@ -26,6 +26,7 @@
   become: true
   gather_facts: true
   roles:
+     - mysql/dump
      - project/dump
     
 - hosts: localhost
@@ -33,9 +34,12 @@
   gather_facts: false
   become: true
   roles:
+     - mysql/scp
+     - mysql/restore
      - project/scp
      - project/restore
      - own
+     - pcsetup/screen/turnon
 
 - hosts: ec2host
   remote_user: "{{ aws_username }}"
@@ -43,4 +47,5 @@
   gather_facts: true
   roles:
      - configs
+     - mysql/remove
      - project/remove
