@@ -36,13 +36,23 @@
   with_items: "{{ project }}.stgin.com"
   when: project_type == "m2"
 
-- name: Ensure nginx and mysql is running
+- name: Ensure nginx is running
   service:
-    name: "{{ item }}"
+    name: nginx
     state: started
-  with_items:
-    - nginx
-    - mysql
+
+- name: Check for port 3306
+  wait_for:
+    port: 3306
+    state: started
+  ignore_errors: true
+  register: check_mysql
+
+- name: Ensure mysql is running
+  service:
+    name: mysql
+    state: started
+  when: check_mysql.failed
 
 - name: Get the username running the deploy
   local_action: command whoami
