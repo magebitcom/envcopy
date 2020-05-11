@@ -1,6 +1,6 @@
 ---
 - name: Get project_root
-  shell: "cat {% if vue_project is defined %}/etc/nginx/sites-enabled/store.{{ project }}.stgin.com{% else %}/etc/nginx/sites-enabled/{{ project }}.stgin.com{% endif %} | grep -e 'MAGE_ROOT' -e 'root' |  egrep -v 'html' | grep var | awk '{print $NF}' | sed 's/;//g' | uniq | head -n 1"
+  shell: "cat {% if vue_project is defined %}/etc/nginx/sites-enabled/store.{{ project }}.stgin.com{% else %}/etc/nginx/sites-enabled/{{ project }}.stgin.com{% endif %} | grep -e 'MAGE_ROOT' -e 'root' |  egrep -v 'html' | grep var | awk '{print $NF}' | sed 's/;//g' | uniq"
   register: project_root_dir
 
 - name: Set project_root
