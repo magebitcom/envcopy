@@ -83,6 +83,5 @@ php7_2_packages:
   - php7.2-bcmath
   - php7.2-intl
   - php7.2-soap
-  - php7.2-mcrypt
   - php7.2-zip
   - php7.2-mysql
