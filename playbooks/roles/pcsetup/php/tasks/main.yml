@@ -52,3 +52,9 @@
     name: "{{ php7_1_packages }}"
     state: "{{ php_packages_state }}"
     install_recommends: "{{ php_install_recommends }}"
+
+- name: Ensure PHP7.2 packages are installed.
+  apt:
+    name: "{{ php7_2_packages }}"
+    state: "{{ php_packages_state }}"
+    install_recommends: "{{ php_install_recommends }}"
