@@ -3,6 +3,12 @@
   connection: local
   gather_facts: true
   become: true
+  pre_tasks:
+  - name: install libutempter0
+    apt:
+      name: libutempter0
+      state: present
+    when: ansible_distribution_release == 'bionic'
   roles:
      - pcsetup/screen/turnoff
      - pcsetup/nginx
