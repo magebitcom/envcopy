@@ -3,6 +3,7 @@
   shell: git gc
   args:
     chdir: "{{ project_root }}/"
+  ignore_errors: true
 
 - name: Archive m1 project without media
   shell: "tar --exclude=./var --exclude=./includes/src --exclude=./pub/static --exclude=./media -zcvf /envcopy/project_{{ project }}.tgz ."
