@@ -35,6 +35,9 @@
 - name: Disable JS merging, bundling and minification
   command: "mysql -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = 0 where path like 'dev/js/%';\""
 
+- name: Replace Algolia index table name
+  command: "mysql -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} {{ project | replace('-','_') }} -e \"update {{ table_prefix }}core_config_data set value = replace(value, value, concat('local-',value)) where path = 'algoliasearch_credentials/credentials/index_prefix';\""
+
 - name: Delete MySQL dump
   file:
     path: "/var/www/{{ project }}/sql/web_{{ project }}.sql"
