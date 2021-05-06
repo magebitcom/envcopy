@@ -1,0 +1,42 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+    - ca-certificates
+    - apt-transport-https
+
+- name: Install apt key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Install vscode repo
+  apt_repository:
+    repo: 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'
+    filename: vscode
+    state: present
+
+- name: Install vscode
+  apt:
+    name: code
+    state: present 
+
+- name: Create config dir
+  become: yes
+  become_user: "{{ username }}"
+  file:
+    path: "~{{ username }}/.config/Code/User/"
+    state: directory
+
+- name: Create settings.json
+  copy:
+    src: settings.json
+    dest: "~{{ username }}/.config/Code/User/settings.json"
+
+- name: Install extensions
+  become: yes
+  become_user: "{{ username }}"
+  vscode_install_extension:
+    executable: code
+    name: "{{ item }}"
+  loop: "{{ vscode_extensions }}"

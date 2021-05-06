@@ -1,0 +1,10 @@
+---
+- name: Download project
+  shell: "rsync -r -v --progress  -e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i {{ aws_private_key_path }}' {{ aws_username }}@{{ project }}.stgin.com:/envcopy/project_{{ project }}.tgz ./ > /dev/tty"
+  args:
+    chdir: "/var/www/{{ project }}/public/"
+  become: true
+
+- name: Include vue tasks
+  include_tasks: vue.yml
+  when: vue_project is defined

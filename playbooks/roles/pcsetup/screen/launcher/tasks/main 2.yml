@@ -1,0 +1,25 @@
+---
+- name: copy remove.py script
+  copy:
+    src: remove.py
+    dest: /tmp/remove.py
+
+- name: remove from launcher
+  script: "/tmp/remove.py {{ item }}"
+  args:
+    executable: python3
+  with_items:
+    - "{{ remove_launchers }}"
+  become: false
+
+- name: delete remove.py
+  file:
+    path: /tmp/remove.py
+    state: absent 
+
+- name: add icons to launcher
+  shell: "gsettings set com.canonical.Unity.Launcher favorites \"$(gsettings get com.canonical.Unity.Launcher favorites | sed \"s/]/,'{{ item }}']/\")\""
+  with_items:
+    - "{{ add_launchers }}"
+  become: false
+

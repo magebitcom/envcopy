@@ -1,0 +1,19 @@
+---
+- name: install nfs-common
+  apt:
+    name: nfs-common
+
+- name: Create NFS dir
+  file:
+    path: /envcopy
+    state: directory
+
+- name: check mount point /envcopy
+  command: mountpoint /envcopy
+  register: mount_stat
+  failed_when: False
+  changed_when: False
+
+- name: Mount NFS
+  shell: mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-90e5dd59.efs.eu-west-1.amazonaws.com:/ /envcopy
+  when: mount_stat.stdout == '/envcopy is not a mountpoint'

@@ -3,6 +3,10 @@
   connection: local
   gather_facts: true
   become: true
+  vars_prompt:
+    - name: username
+      prompt: What is your username?
+      private: no
   pre_tasks:
   - name: install libutempter0
     apt:
@@ -17,7 +21,7 @@
      - pcsetup/percona-server
      - pcsetup/guake
      - pcsetup/slack
-     - pcsetup/phpstorm
+     - pcsetup/vscode
      - pcsetup/chrome
      - { role: pcsetup/screen/launcher, when: ansible_distribution == "Ubuntu" and ansible_distribution_version == '16.04' }
      - pcsetup/screen/turnon

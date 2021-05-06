@@ -1,0 +1,5 @@
+---
+- name: install guake
+  apt:
+    name: guake
+    state: present

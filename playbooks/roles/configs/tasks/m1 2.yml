@@ -1,0 +1,22 @@
+---
+- name: Download configs to project dir
+  fetch:
+    src: "/var/www/staging/www/app/etc/{{ item }}"
+    dest: "/var/www/{{ project }}/public/app/etc/"
+    flat: yes
+  with_items:
+    - local.xml
+
+- name: Replace MySQL host value
+  local_action:
+    module: lineinfile
+    path: "/var/www/{{ project }}/public/app/etc/local.xml"
+    regexp: "<host>"
+    line: "                    <host><![CDATA[localhost:3306]]></host>"
+
+- name: Replace DB name
+  local_action:
+    module: replace
+    path: "/var/www/{{ project }}/public/app/etc/local.xml"
+    regexp: "{{ mysql_db }}"
+    replace: "{{ project | replace('-','_') }}"

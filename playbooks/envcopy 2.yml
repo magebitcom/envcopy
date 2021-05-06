@@ -1,0 +1,51 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+     - pcsetup/screen/turnoff
+     - register-ec2host
+
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
+     - nfs/mount
+     - magento/version
+
+- hosts: localhost
+  connection: local
+  become: true
+  gather_facts: false
+  roles:
+     - env/create
+
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
+     - mysql/dump
+     - project/dump
+    
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  roles:
+     - mysql/scp
+     - mysql/restore
+     - project/scp
+     - project/restore
+     - own
+     - pcsetup/screen/turnon
+
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
+     - configs
+     - mysql/remove
+     - project/remove

@@ -1,0 +1,5 @@
+---
+- name: Add host to ec2hosts group
+  add_host:
+    hostname: "{{ project }}.{{ domain }}"
+    groups: ec2host

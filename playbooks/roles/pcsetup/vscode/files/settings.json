@@ -1,0 +1,84 @@
+{
+    "[vue]": {
+        "editor.defaultFormatter": "octref.vetur"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.fixAll.stylelint": true
+    },
+    "vetur.format.defaultFormatter.js": "prettier-eslint",
+    "vetur.format.defaultFormatter.html": "js-beautify-html",
+    "vetur.format.defaultFormatter.ts": "prettier-tslint",
+    "eslint.format.enable": true,
+    "eslint.lintTask.enable": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[php]": {
+        "editor.defaultFormatter": "junstyle.php-cs-fixer"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "php-cs-fixer.rules": "@PSR2",
+    "stylelint.packageManager": "yarn",
+    "phpcbf.onsave": true,
+    "phpcbf.standard": "Magento2",
+    "psi-header.variables": [
+        ["company", "Magebit"],
+        ["companyweb", "https://magebit.com/"],
+        ["author", "Your Name"],
+        ["authoremail", "info@magebit.com"]
+    ],
+    "debug.javascript.usePreview": true,
+    "psi-header.lang-config": [
+        {
+            "language": "php",
+            "begin": "<?php declare(strict_types=1); \n/**",
+            "prefix": " * ",
+            "end": " */",
+            "blankLinesAfter": 1,
+            "forceToTop": false
+        }
+    ],
+    "psi-header.templates": [
+        {
+            "language": "php",
+            "template": [
+                "This file is part of the Magebit_Package package",
+                "",
+                "DISCLAIMER",
+                "",
+                "Do not edit or add to this file if you wish to upgrade Magebit_Package",
+                "to newer versions in the future.",
+                "",
+                "@copyright Copyright (c) <<year>> <<company>> (<<companyweb>>)",
+                "@author    <<author>> <<<authoremail>>>",
+                "@license   GNU General Public License (\"GPL\") v3.0",
+                "",
+                "For the full copyright and license information, please view the LICENSE",
+                "file that was distributed with this source code."
+            ]
+        }
+    ],
+    "prettier.singleQuote": true,
+    "prettier.vueIndentScriptAndStyle": true,
+    "eslint.packageManager": "yarn",
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "javascript.updateImportsOnFileMove.enabled": "never",
+    "phpAddProperty.property.visibility.default": "protected",
+    "[scss]": {
+        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    }
+}

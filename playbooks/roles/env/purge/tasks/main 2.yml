@@ -1,0 +1,45 @@
+---
+- name: Ensure nginx is running
+  service:
+    name: nginx
+    state: started
+
+- name: Check for port 3306
+  wait_for:
+    port: 3306
+    state: started
+  ignore_errors: true
+  register: check_mysql
+
+- name: Ensure mysql is running
+  service:
+    name: mysql
+    state: started
+  when: check_mysql.failed
+
+- name: Delete project directories
+  file:
+    path: "/var/www/{{ project }}"
+    state: absent
+  become: yes
+
+- name: Delete nginx vhost
+  file:
+    path: "/etc/nginx/sites-available/{{ project }}"
+    state: absent
+  become: yes
+
+- name: Remove link
+  file:
+    path: "/etc/nginx/sites-enabled/{{ project }}"
+    state: absent
+  notify:
+    - restart nginx
+  become: yes
+
+- name: Update /etc/hosts file
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1 {{ project }} {{ project }}.local"
+    state: absent
+  become: yes

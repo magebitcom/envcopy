@@ -1,0 +1,15 @@
+---
+- name: Unarchive project.tgz
+  shell: "tar xzvf project_{{ project }}.tgz"
+  args: 
+    chdir: "/var/www/{{ project }}/public/"
+  become: true
+
+- name: Delete project dump
+  file:
+    path: "/var/www/{{ project }}/public/project_{{ project }}.tgz"
+    state: absent
+
+- name: Include vue tasks
+  include_tasks: vue.yml
+  when: vue_project is defined
