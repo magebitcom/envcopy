@@ -7,6 +7,12 @@
     - name: username
       prompt: What is your username?
       private: no
+    - name: name
+      prompt: What is your Name?
+      private: no
+    - name: surname
+      prompt: What is your Surname?
+      private: no
   pre_tasks:
   - name: install libutempter0
     apt:

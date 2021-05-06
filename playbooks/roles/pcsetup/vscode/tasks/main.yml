@@ -29,8 +29,8 @@
     state: directory
 
 - name: Create settings.json
-  copy:
-    src: settings.json
+  template:
+    src: settings.json.j2
     dest: "~{{ username }}/.config/Code/User/settings.json"
 
 - name: Install extensions
