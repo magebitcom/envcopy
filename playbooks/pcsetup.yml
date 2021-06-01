@@ -21,6 +21,8 @@
     when: ansible_distribution_release == 'bionic'
   roles:
      - pcsetup/screen/turnoff
+     - pcsetup/docker
+     - pcsetup/elasticsearch
      - pcsetup/nginx
      - pcsetup/php
      - pcsetup/composer
