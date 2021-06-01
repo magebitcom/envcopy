@@ -16,6 +16,12 @@
           - python3-mysqldb
           - python3-pymysql
 
+- name: Start mysql
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
 - name: Update MySQL root password
   mysql_user: name=root host={{ item }} password={{ root_password }} login_user=root login_password={{ root_password }} check_implicit_admin=yes
   with_items:
