@@ -4,11 +4,6 @@
   apt_repository: repo='ppa:ondrej/php'
   when: ansible_distribution == "Ubuntu"
 
-- name: Add repository for PHP 5 compatibility packages (Ubuntu).
-  apt_repository: repo='ppa:ondrej/php5-compat'
-  when:
-    - ansible_distribution == "Ubuntu" and ansible_distribution_version == '16.04'
-
 - name: Add dependencies for PHP versions (Debian).
   apt:
     name: "{{ item }}"
@@ -34,27 +29,20 @@
   apt: update_cache=yes
   when: php_ondrej_debian_repo.changed and (ansible_distribution == "Debian")
 
-- name: Ensure PHP5.6 packages are installed.
+- name: Ensure PHP7.3 packages are installed.
   apt:
-    name: "{{ php5_6_packages }}"
+    name: "{{ php7_3_packages }}"
     state: "{{ php_packages_state }}"
     install_recommends: "{{ php_install_recommends }}"
 
-- name: Ensure PHP7.0 packages are installed.
+- name: Ensure PHP7.4 packages are installed.
   apt:
-    name: "{{ php7_0_packages }}"
-    state: "{{ php_packages_state }}"
-    install_recommends: "{{ php_install_recommends }}"
-  register: php_package_install
-
-- name: Ensure PHP7.1 packages are installed.
-  apt:
-    name: "{{ php7_1_packages }}"
+    name: "{{ php7_4_packages }}"
     state: "{{ php_packages_state }}"
     install_recommends: "{{ php_install_recommends }}"
 
-- name: Ensure PHP7.2 packages are installed.
+- name: Ensure PHP8.0 packages are installed.
   apt:
-    name: "{{ php7_2_packages }}"
+    name: "{{ php8_0_packages }}"
     state: "{{ php_packages_state }}"
     install_recommends: "{{ php_install_recommends }}"

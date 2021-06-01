@@ -1,3 +1,0 @@
----
-- name: Create mysql database
-  command: "mysql -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} -e 'CREATE DATABASE IF NOT EXISTS {{ project | replace('-','_') }};'"

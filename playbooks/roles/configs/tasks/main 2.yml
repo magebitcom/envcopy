@@ -1,8 +1,0 @@
----
-- name: Prepare configs
-  include_tasks: m1.yml
-  when: project_type == 'm1'
-
-- name: Prepare configs
-  include_tasks: m2.yml
-  when: project_type == 'm2'

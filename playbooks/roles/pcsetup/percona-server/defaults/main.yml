@@ -6,7 +6,6 @@ root_password: option123
 port: 3306
 bind_address: 0.0.0.0
 max_allowed_packet: 16M
-key_buffer: 16M
 thread_stack: 192K
 thread_cache_size: 8
 # Uncomment following vars if you want to log queries

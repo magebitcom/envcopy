@@ -6,7 +6,7 @@ if [[ "$params" == "--ignore-media" ]]
 then
   echo -n "Define project name without .stgin.com domain name [example: projectx]: "
   read project
-  ./ansible-playbook -K -i localhost, playbooks/envcopy.yml -e project=$project -e media_dump='false'
+  ansible-playbook -K -i localhost, playbooks/envcopy.yml -e project=$project -e media_dump='false'
 elif [[ "$params" == "--help" ]]
 then
   echo 'Options:'
@@ -17,5 +17,5 @@ else
   echo ' '
   echo 'Use "./project_setup.sh --help" for more information about a given command.'
   sleep 2
-  ./ansible-playbook -K -i localhost, playbooks/envcopy.yml -e project=$project -e media_dump='true'
+  ansible-playbook -K -i localhost, playbooks/envcopy.yml -e project=$project -e media_dump='true'
 fi

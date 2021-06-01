@@ -1,9 +1,0 @@
----
-- name: Delete project.tgz
-  file:
-    path: "/envcopy/project_{{ project }}.tgz"
-    state: absent
-
-- name: Include vue tasks
-  include_tasks: vue.yml
-  when: vue_project is defined

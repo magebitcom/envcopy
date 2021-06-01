@@ -1,6 +1,6 @@
 Requirements:
 
-	1. Ubuntu16 OS
+	1. Ubuntu18/20 OS
 	2. MySQL, nginx, php*, ansible 2.4 should be installed
 	3. You should have SSH access to EC2
   	4. Nginx should be installed and running
@@ -26,5 +26,6 @@ Local project purge:
 
 Installation:
 
-	sudo apt-get install python-pip python-dev -y
-	sudo -H pip install ansible==2.4.1.0
+	sudo apt-get install python3-pip python3-dev -y
+	sudo -H pip3 install ansible==2.8.1.0
+        sudo -H pip3 install pymysql

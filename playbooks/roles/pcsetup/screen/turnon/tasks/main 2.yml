@@ -1,4 +1,0 @@
----
-- name: Turn on screen lock
-  shell: gsettings set org.gnome.desktop.screensaver lock-enabled true
-  ignore_errors: yes

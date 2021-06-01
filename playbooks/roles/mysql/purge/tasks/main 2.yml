@@ -1,3 +1,0 @@
----
-- name: Drop mysql database
-  command: "mysql -h127.0.0.1 -u{{ mysql_user }} -p{{ mysql_pass }} -e 'DROP DATABASE IF EXISTS {{ project | replace('-','_') }};'"

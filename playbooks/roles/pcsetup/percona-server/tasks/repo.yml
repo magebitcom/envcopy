@@ -1,17 +1,20 @@
 ---
 # file: tasks/repo.tml
+- name: install packages
+  apt:
+    name: curl
 
 - name: download percona package deb
   get_url:
-    url: "https://repo.percona.com/apt/percona-release_0.1-6.{{ ansible_distribution_release }}_all.deb"
-    dest: "/tmp/percona-release_0.1-6.{{ ansible_distribution_release }}_all.deb"
+    url: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
+    dest: "/tmp/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
 
 - name: install percona deb
-  command: "dpkg -i /tmp/percona-release_0.1-6.{{ ansible_distribution_release }}_all.deb"
+  command: "dpkg -i /tmp/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
 
 - name: delete percona deb
   file: 
-    path: "/tmp/percona-release_0.1-6.{{ ansible_distribution_release }}_all.deb"
+    path: "/tmp/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
     state: absent
 
 - name: Update apt cache
