@@ -32,4 +32,5 @@
      - pcsetup/vscode
      - pcsetup/chrome
      - pcsetup/screen/launcher
+     - pcsetup/l2tp
      - pcsetup/screen/turnon
