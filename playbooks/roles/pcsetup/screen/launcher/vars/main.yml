@@ -1,13 +1,6 @@
 ---
-remove_launchers:
-  - application://ubuntu-amazon-default.desktop
-  - application://libreoffice-impress.desktop
-  - application://libreoffice-calc.desktop
-  - application://libreoffice-writer.desktop
-  - application://org.gnome.Software.desktop
-  - application://firefox.desktop
-
 add_launchers:
-  - 'application:\/\/google-chrome.desktop'
-  - 'application:\/\/guake.desktop'
-  - 'application:\/\/jetbrains-phpstorm.desktop'
+  - 'google-chrome.desktop'
+  - 'guake.desktop'
+  - 'code.desktop'
+  - 'slack.desktop'  
