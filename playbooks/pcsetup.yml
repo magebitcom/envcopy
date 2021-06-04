@@ -26,7 +26,6 @@
      - pcsetup/nginx
      - pcsetup/php
      - pcsetup/composer
-     - pcsetup/percona-server
      - pcsetup/guake
      - pcsetup/slack
      - pcsetup/vscode
@@ -34,3 +33,37 @@
      - pcsetup/screen/launcher
      - pcsetup/l2tp
      - pcsetup/screen/turnon
+  post_tasks:
+  - name: Install mysql client
+    apt:
+      name: mysql-client
+  - name: Create MySQL 8 container
+    docker_container:
+      name: mysql8
+      state: started
+      restart: yes
+      restart_policy: always
+      image: mysql:8.0
+      command: --default-authentication-plugin=mysql_native_password
+      ports:
+      - "3307:3306"
+      env:
+        MYSQL_ROOT_HOST: "%"
+        MYSQL_ROOT_PASSWORD: "option123"
+      volumes:
+      - "mysql8:/var/lib/mysql:rw"
+  - name: Create MySQL 5.7 container
+    docker_container:
+      name: mysql57
+      state: started
+      restart: yes
+      restart_policy: always
+      image: mysql:5.7
+      command: --default-authentication-plugin=mysql_native_password
+      ports:
+      - "3306:3306"
+      env:
+        MYSQL_ROOT_HOST: "%"
+        MYSQL_ROOT_PASSWORD: "option123"
+      volumes:
+      - "mysql57:/var/lib/mysql:rw"
