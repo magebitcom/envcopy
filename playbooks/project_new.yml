@@ -2,6 +2,8 @@
 - hosts: localhost
   connection: local
   gather_facts: false
+  vars:
+    mysql_port: "{{ '3306' if mysql_version == '5.7' else '3307' }}" 
   roles:
      - pcsetup/screen/turnoff
      - env/local
