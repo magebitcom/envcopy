@@ -1,10 +1,10 @@
 Requirements:
 
 	1. Ubuntu18/20 OS
-	2. MySQL, nginx, php*, ansible 2.4 should be installed
+	2. MySQL, nginx, php*, ansible 2.8 should be installed
 	3. You should have SSH access to EC2
   	4. Nginx should be installed and running
-  	5. MySQL should be installed and running
+  	5. MySQL should be installed and running(5.7 on port 3306, 8.0 on port 3307)
   	6. MySQL root password should be option123
 
 Setup environment:

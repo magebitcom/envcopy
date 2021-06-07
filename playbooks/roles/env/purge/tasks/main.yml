@@ -4,9 +4,9 @@
     name: nginx
     state: started
 
-- name: Check for port 3306
+- name: Check for port mysql port
   wait_for:
-    port: 3306
+    port: "{{ mysql_port }}"
     state: started
   ignore_errors: true
   register: check_mysql
