@@ -25,16 +25,27 @@
   remote_user: "{{ aws_username }}"
   become: true
   gather_facts: true
-  roles:
+    roles:
      - mysql/dump
      - project/dump
+  post_tasks:
+  - name: Get mysql version
+    shell: mysql -V | awk '{ print $3 }' | awk -F'.' '{ print $1 }'
+    register: mysql_major_version
+  - name: Set mysql_port
+    set_fact:
+      mysql_port: "{{ '3307' if mysql_major_version.stdout == '8' else '3306' }}" 
+  - name: add variables to dummy host
+    add_host:
+      name: variable_holder
+      mysql_port: "{{ mysql_port }}"
     
 - hosts: localhost
   connection: local
   gather_facts: false
   become: true
   vars:
-    mysql_port: "{{ '3306' if mysql_version == '5.7' else '3307' }}" 
+    mysql_port: "{{ hostvars['variable_holder']['mysql_port'] }}" 
   roles:
      - mysql/scp
      - mysql/restore
