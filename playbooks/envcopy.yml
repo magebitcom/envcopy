@@ -25,9 +25,9 @@
   remote_user: "{{ aws_username }}"
   become: true
   gather_facts: true
-    roles:
-     - mysql/dump
-     - project/dump
+  roles:
+  - mysql/dump
+  - project/dump
   post_tasks:
   - name: Get mysql version
     shell: mysql -V | awk '{ print $3 }' | awk -F'.' '{ print $1 }'
