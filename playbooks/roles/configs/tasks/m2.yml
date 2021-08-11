@@ -13,7 +13,7 @@
     module: lineinfile
     path: "/var/www/{{ project }}/public/app/etc/env.php"
     regexp: "'host' => '"
-    line: "                'host' => 'localhost:3306',"
+    line: "                'host' => 'localhost:{{ mysql_port }}',"
   
 - name: Replace DB name
   local_action:
