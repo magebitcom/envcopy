@@ -14,13 +14,6 @@
      - nfs/mount
      - magento/version
 
-- hosts: localhost
-  connection: local
-  become: true
-  gather_facts: false
-  roles:
-     - env/create
-
 - hosts: ec2host
   remote_user: "{{ aws_username }}"
   become: true
@@ -34,6 +27,7 @@
   gather_facts: false
   become: true
   roles:
+     - env/create
      - project/scp
      - project/restore
      - own
