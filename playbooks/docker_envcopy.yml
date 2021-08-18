@@ -18,22 +18,6 @@
   connection: local
   become: true
   gather_facts: false
-  pre_tasks:
-  - name: Get installed packages
-    package_facts:
-      manager: apt
-  - name: Fail if required packages are not installed
-    fail:
-      msg: "{{ item }} is not installed"
-    loop:
-    - docker
-    - docker-compose
-    when: item not in ansible_facts.packages
-  - name: Run make commands
-    shell: "{{ item }}"
-    loop:
-    - make init
-    - make local
   roles:
      - env/create
 
@@ -42,9 +26,30 @@
   become: true
   gather_facts: true
   roles:
-  - mysql/dump
   - project/dump
-    
+  - mysql/dump
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  roles:
+     - project/scp
+     - project/restore
+     - own
+  post_tasks:
+  - name: Fail if required packages are not installed
+    shell:
+      msg: "{{ item }} -v"
+    loop:
+    - docker
+    - docker-compose
+  - name: Run make commands
+    shell: "{{ item }}"
+    loop:
+    - make init
+    - make local
+
 - hosts: localhost
   connection: local
   gather_facts: false
@@ -59,9 +64,6 @@
   roles:
      - mysql/scp
      - mysql/restore
-     - project/scp
-     - project/restore
-     - own
      - pcsetup/screen/turnon
   post_tasks:
   - name: Run make commands
