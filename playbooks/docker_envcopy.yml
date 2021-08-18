@@ -1,0 +1,80 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+     - pcsetup/screen/turnoff
+     - register-ec2host
+
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
+     - nfs/mount
+     - magento/version
+
+- hosts: localhost
+  connection: local
+  become: true
+  gather_facts: false
+  pre_tasks:
+  - name: Get installed packages
+    package_facts:
+      manager: apt
+  - name: Fail if required packages are not installed
+    fail:
+      msg: "{{ item }} is not installed
+    loop:
+    - docker
+    - docker-composer
+    when: item not in ansible_facts.packages
+  - name: Run make commands
+    shell: "{{ item }}"
+    loop:
+    - make init
+    - make local
+  roles:
+     - env/create
+
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
+  - mysql/dump
+  - project/dump
+    
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  pre_tasks:
+  - name: Get mysql port
+    shell: "grep MYSQL_PORT /var/www/{{ project }}/public/.env.staging |  awk -F'=' '{ print $2 }'"
+    register: mysql_port_env
+  - name: Set fact
+    set_fact:
+      mysql_port: "{{ mysql_port_env.stdout }}"
+  roles:
+     - mysql/scp
+     - mysql/restore
+     - project/scp
+     - project/restore
+     - own
+     - pcsetup/screen/turnon
+  post_tasks:
+  - name: Run make commands
+    shell: "{{ item }}"
+    loop:
+    - make stop
+    - make local
+
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
+     - configs
+     - mysql/remove
+     - project/remove
