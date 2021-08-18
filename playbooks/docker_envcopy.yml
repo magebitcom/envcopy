@@ -24,10 +24,10 @@
       manager: apt
   - name: Fail if required packages are not installed
     fail:
-      msg: "{{ item }} is not installed
+      msg: "{{ item }} is not installed"
     loop:
     - docker
-    - docker-composer
+    - docker-compose
     when: item not in ansible_facts.packages
   - name: Run make commands
     shell: "{{ item }}"
