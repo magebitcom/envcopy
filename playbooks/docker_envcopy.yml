@@ -39,8 +39,7 @@
      - own
   post_tasks:
   - name: Fail if required packages are not installed
-    shell:
-      msg: "{{ item }} -v"
+    shell: "{{ item }} -v"
     loop:
     - docker
     - docker-compose
