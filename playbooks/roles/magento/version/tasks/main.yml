@@ -138,7 +138,7 @@
 
 - name: Set php_version
   set_fact:
-    php_version: "{% if php_version_m2_70.failed == False %}php7.0-fpm{% elif php_version_m2_71.failed == False %}php7.1-fpm{% else %}{% elif php_version_m2_72.failed == False %}php7.2-fpm{% else %}{% elif php_version_m2_73.failed == False %}php7.3-fpm{% else %}php7.4-fpm{% endif %}"
+    php_version: "{% if php_version_m2_70.failed == False %}php7.0-fpm{% elif php_version_m2_71.failed == False %}php7.1-fpm{% elif php_version_m2_72.failed == False %}php7.2-fpm{% elif php_version_m2_73.failed == False %}php7.3-fpm{% else %}php7.4-fpm{% endif %}"
   when: project_type == "m2"  
 
 - name: Echo m2 project php_version
