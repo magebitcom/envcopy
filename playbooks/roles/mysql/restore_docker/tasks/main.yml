@@ -1,0 +1,44 @@
+---
+- name: Create mysql database
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} -e 'CREATE DATABASE IF NOT EXISTS magento;'"
+
+- name: Unarchive database
+  shell: "gzip -f -d /var/www/{{ project }}/sql/web_{{ project }}.sql.gz"
+
+- name: Restore mysql database
+  shell: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento < /var/www/{{ project }}/sql/web_{{ project }}.sql"
+
+- name: Replace unsecure web URL
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = 'http://{{ project }}.local{{ magento_port }}/' where path = 'web/unsecure/base_url';\""
+
+- name: Replace secure web URL
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = 'http://{{ project }}.local{{ magento_port }}/' where path = 'web/secure/base_url';\""
+
+- name: Disable secure use in frontend
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'web/secure/use_in_frontend';\""
+
+- name: Disable secure use in adminhtml
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'web/secure/use_in_adminhtml';\""
+
+- name: Disable insecure request upgrade
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'web/secure/enable_upgrade_insecure';\""
+
+- name: Disable insecure hsts
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = 0 where path = 'web/secure/enable_hsts';\""
+
+- name: Replace cookie domain
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = '{{ project }}.local' where path = 'web/cookie/cookie_domain';\""
+
+- name: Disable CSS merging and minification
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = 0 where path like 'dev/css/%';\""
+
+- name: Disable JS merging, bundling and minification
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = 0 where path like 'dev/js/%';\""
+
+- name: Replace Algolia index table name
+  command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} magento -e \"update {{ table_prefix }}core_config_data set value = replace(value, value, concat('local-',value)) where path = 'algoliasearch_credentials/credentials/index_prefix';\""
+
+- name: Delete MySQL dump
+  file:
+    path: "/var/www/{{ project }}/sql/web_{{ project }}.sql"
+    state: absent

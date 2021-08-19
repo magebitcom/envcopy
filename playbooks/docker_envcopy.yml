@@ -67,7 +67,7 @@
       magento_port: ":{{ magento_port_env.stdout }}"
   roles:
      - mysql/scp
-     - mysql/restore
+     - mysql/restore_docker
      - pcsetup/screen/turnon
 
 - hosts: localhost

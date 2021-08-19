@@ -1,0 +1,5 @@
+---
+mysql_user_local: root
+mysql_pass_local: option123
+mysql_port: 3306
+magento_port: ''
