@@ -58,9 +58,13 @@
   - name: Get mysql port
     shell: "grep MYSQL_PORT /var/www/{{ project }}/public/.env.staging |  awk -F'=' '{ print $2 }'"
     register: mysql_port_env
+  - name: Get magento port
+    shell: "grep MAGENTO_PORT /var/www/{{ project }}/public/.env.staging |  awk -F'=' '{ print $2 }'"
+    register: magento_port_env
   - name: Set fact
     set_fact:
       mysql_port: "{{ mysql_port_env.stdout }}"
+      magento_port: ":{{ magento_port_env.stdout }}"
   roles:
      - mysql/scp
      - mysql/restore
