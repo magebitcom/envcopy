@@ -1,2 +1,2 @@
 - name: Dump mysql database
-  shell: "mysqldump -u{{ mysql_user }} -p{{ mysql_pass }} {{ mysql_db }} | gzip -c > /envcopy/web_{{ project }}.sql.gz"
+  shell: "mysqldump -P {{ mysql_port }} -u{{ mysql_user }} -p{{ mysql_pass }} {{ mysql_db }} | gzip -c > /envcopy/web_{{ project }}.sql.gz"

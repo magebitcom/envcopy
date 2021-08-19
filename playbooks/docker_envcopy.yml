@@ -20,7 +20,6 @@
   gather_facts: true
   roles:
   - project/dump
-  - mysql/dump
 
 - hosts: localhost
   connection: local
@@ -65,6 +64,18 @@
     set_fact:
       mysql_port: "{{ mysql_port_env.stdout }}"
       magento_port: ":{{ magento_port_env.stdout }}"
+
+- hosts: ec2host
+  remote_user: "{{ aws_username }}"
+  become: true
+  gather_facts: true
+  roles:
+  - mysql/dump_docker
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
   roles:
      - mysql/scp
      - mysql/restore_docker
@@ -73,10 +84,10 @@
 - hosts: localhost
   connection: local
   gather_facts: false
-  become: true
+  become: false
   tasks:
   - name: Run make commands
-    shell: "sudo -uvitalijs {{ item }}"
+    shell: "{{ item }}"
     args:
       chdir: "/var/www/{{ project }}/public/"
     loop:
