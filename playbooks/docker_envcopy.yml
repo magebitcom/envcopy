@@ -31,7 +31,12 @@
      - project/scp
      - project/restore
      - own
-  post_tasks:
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  tasks:
   - name: Fail if required packages are not installed
     shell: "{{ item }} -v"
     loop:
@@ -60,9 +65,14 @@
      - mysql/scp
      - mysql/restore
      - pcsetup/screen/turnon
-  post_tasks:
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+  tasks:
   - name: Run make commands
-    shell: "{{ item }}"
+    shell: "sudo -uvitalijs {{ item }}"
     args:
       chdir: "/var/www/{{ project }}/public/"
     loop:
