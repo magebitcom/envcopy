@@ -39,6 +39,8 @@
     - docker-compose
   - name: Run make commands
     shell: "{{ item }}"
+    args:
+      chdir: "/var/www/{{ project }}/public/"
     loop:
     - make init
     - make local
@@ -61,6 +63,8 @@
   post_tasks:
   - name: Run make commands
     shell: "{{ item }}"
+    args:
+      chdir: "/var/www/{{ project }}/public/"
     loop:
     - make stop
     - make local
