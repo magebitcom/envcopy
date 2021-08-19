@@ -28,7 +28,7 @@
      - pcsetup/composer
      - pcsetup/guake
      - pcsetup/slack
-     - pcsetup/vscode
+       #     - pcsetup/vscode
      - pcsetup/chrome
      - pcsetup/screen/launcher
      - pcsetup/l2tp

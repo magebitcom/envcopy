@@ -53,7 +53,7 @@
   service:
     name: mysql
     state: started
-  when: check_mysql.failed
+  when: check_mysql.failed|default(false)
 
 - name: Get the username running the deploy
   local_action: command whoami
