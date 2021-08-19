@@ -6,7 +6,7 @@ if [[ "$params" == "--ignore-media" ]]
 then
   echo -n "Define project name without .stgin.com domain name [example: projectx]: "
   read project
-  ansible-playbook -K -i localhost, playbooks/docker_envcopy.yml -e project=$project -e media_dump='false'
+  ansible-playbook -K -i localhost, playbooks/docker_envcopy.yml -e project=$project -e media_dump='false' -e docker_project='true'
 elif [[ "$params" == "--help" ]]
 then
   echo 'Options:'
