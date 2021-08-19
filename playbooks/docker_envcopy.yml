@@ -70,7 +70,7 @@
   become: true
   gather_facts: true
   roles:
-  - mysql/dump
+    - mysql/dump_docker
 
 - hosts: localhost
   connection: local
