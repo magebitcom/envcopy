@@ -17,5 +17,5 @@ else
   echo ' '
   echo 'Use "./project_setup.sh --help" for more information about a given command.'
   sleep 2
-  ansible-playbook -K -i localhost, playbooks/docker_envcopy.yml -e project=$project -e media_dump='true'
+  ansible-playbook -K -i localhost, playbooks/docker_envcopy.yml -e project=$project -e media_dump='true' -e docker_project='true'
 fi

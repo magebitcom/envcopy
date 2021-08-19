@@ -47,6 +47,7 @@
     state: started
   ignore_errors: true
   register: check_mysql
+  when: docker_project is not defined
 
 - name: Ensure mysql is running
   service:
@@ -82,6 +83,7 @@
     dest: "/etc/nginx/sites-available/{{ project }}"
     mode: 0644
   become: yes
+  when: docker_project is not defined
 
 - name: Create link for status file
   file:
@@ -91,6 +93,7 @@
   notify:
     - restart nginx
   become: yes
+  when: docker_project is not defined
 
 - name: Update /etc/hosts file
   lineinfile:
