@@ -29,7 +29,6 @@
      - env/create
      - project/scp
      - project/restore
-     - own
 
 - hosts: localhost
   connection: local
