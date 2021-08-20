@@ -27,7 +27,6 @@
   become: true
   roles:
      - env/create
-     - project/scp_docker
      - project/restore_docker
 
 - hosts: localhost
