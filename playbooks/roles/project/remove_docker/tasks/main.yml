@@ -1,0 +1,10 @@
+---
+- name: Delete project.tgz
+  file:
+    path: "/envcopy/project_{{ project }}.tgz"
+    state: absent
+
+- name: Delete media.tgz
+  file:
+    path: "/envcopy/media_{{ project }}.tgz"
+    state: absent

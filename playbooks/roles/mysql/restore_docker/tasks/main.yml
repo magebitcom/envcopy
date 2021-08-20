@@ -1,4 +1,7 @@
 ---
+- name: Sleep for 15 seconds for MySQL to be up
+  command: "sleep 15"
+
 - name: Create mysql database
   command: "mysql -P {{ mysql_port }} --protocol=tcp -h127.0.0.1 -u{{ mysql_user_local }} -p{{ mysql_pass_local }} -e 'CREATE DATABASE IF NOT EXISTS magento;'"
 

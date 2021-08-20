@@ -19,7 +19,7 @@
   become: true
   gather_facts: true
   roles:
-  - project/dump
+  - project/dump_docker
 
 - hosts: localhost
   connection: local
@@ -27,8 +27,8 @@
   become: true
   roles:
      - env/create
-     - project/scp
-     - project/restore
+     - project/scp_docker
+     - project/restore_docker
 
 - hosts: localhost
   connection: local
@@ -105,4 +105,4 @@
   gather_facts: true
   roles:
      - mysql/remove
-     - project/remove
+     - project/remove_docker

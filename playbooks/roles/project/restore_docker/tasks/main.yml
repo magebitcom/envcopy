@@ -1,0 +1,30 @@
+---
+- name: Unarchive project.tgz
+  shell: "tar xzvf project_{{ project }}.tgz"
+  args: 
+    chdir: "/var/www/{{ project }}/public/"
+  become: true
+
+- name: Delete project dump
+  file:
+    path: "/var/www/{{ project }}/public/project_{{ project }}.tgz"
+    state: absent
+
+- name: Get media root
+  shell: "grep MEDIA_DIR /var/www/{{ project }}/public/.env |  awk -F'=' '{ print $2 }'"
+  register: media_root_env
+
+- name: Set fact
+  set_fact:
+    media_root: "{{ media_root_env.stdout }}"
+
+- name: Unarchive media.tgz
+  shell: "tar xzvf media_{{ project }}.tgz"
+  args:
+    chdir: "{{ media_root }}/"
+  become: true
+
+- name: Delete media dump
+  file:
+    path: "{{ media_root }}/media_{{ project }}.tgz"
+    state: absent

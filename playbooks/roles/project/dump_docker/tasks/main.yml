@@ -1,0 +1,26 @@
+---
+- name: Execute git gc
+  shell: git gc
+  args:
+    chdir: "{{ project_root }}/"
+  ignore_errors: true
+
+- name: Archive m2 project 
+  shell: "tar --exclude=./var --exclude=./vendor --exclude=./generated --exclude=./pub/static --exclude=./pub/media --exclude=./build -zcvf /envcopy/project_{{ project }}.tgz ."
+  args:
+    chdir: "{{ project_root }}"
+  when: project_type == 'm2'
+
+- name: Get media root
+  shell: "grep MEDIA_DIR /var/www/{{ project }}/public/.env.staging |  awk -F'=' '{ print $2 }'"
+  register: media_root_env
+
+- name: Set fact
+  set_fact:
+    media_root: "{{ media_root_env.stdout }}"
+
+- name: Archive m2 project media
+  shell: "tar -zcvf /envcopy/media_{{ project }}.tgz ."
+  args:
+    chdir: "{{ media_root }}"
+  when: project_type == 'm2' and media_dump == 'true'
