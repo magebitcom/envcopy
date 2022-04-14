@@ -27,5 +27,5 @@ Local project purge:
 Installation:
 
 	sudo apt-get install python3-pip python3-dev git -y
-        sudo -H pip3 install Jinja2==3.0.1
+        sudo -H pip3 install Jinja2==3.0.3
 	sudo -H pip3 install ansible==2.8.1.0 pymysql docker-py
