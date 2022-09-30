@@ -4,3 +4,8 @@ add_launchers:
   - 'guake.desktop'
   - 'code.desktop'
   - 'slack.desktop'  
+add_launchers_u22:
+  - 'google-chrome.desktop'
+  - 'guake-prefs.desktop'
+  - 'code.desktop'
+  - 'slack.desktop'

@@ -1,11 +1,7 @@
 ---
-- name: clean launcher
-  shell: gsettings set org.gnome.shell favorite-apps "['']"
-  become: false
+- include_tasks: "before_U22.yml"
+  when: ansible_distribution_version != "22.04" 
 
-- name: add icons to launcher
-  shell: "gsettings set org.gnome.shell favorite-apps \"$(gsettings get org.gnome.shell favorite-apps | sed \"s/]/,'{{ item }}']/\")\""
-  with_items:
-    - "{{ add_launchers }}"
-  become: false
+- include_tasks: "U22.yml"
+  when: ansible_distribution_version == "22.04"
 

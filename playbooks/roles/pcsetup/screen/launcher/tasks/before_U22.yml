@@ -1,0 +1,11 @@
+---
+- name: clean launcher
+  shell: gsettings set org.gnome.shell favorite-apps "['']"
+  become: false
+
+- name: add icons to launcher
+  shell: "gsettings set org.gnome.shell favorite-apps \"$(gsettings get org.gnome.shell favorite-apps | sed \"s/]/,'{{ item }}']/\")\""
+  with_items:
+    - "{{ add_launchers }}"
+  become: false
+

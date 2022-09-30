@@ -1,0 +1,22 @@
+---
+- name: Create the user profile
+  copy:
+    src: user
+    dest: /etc/dconf/profile/user
+  become: true
+
+- name: Create the directory /etc/dconf/db/local.d/
+  file:
+    path: /etc/dconf/db/local.d/
+    state: directory
+  become: true
+
+- name: Create the key file /etc/dconf/db/local.d/00-favorite-apps
+  template:
+    src: 00-favorite-apps.j2
+    dest: /etc/dconf/db/local.d/00-favorite-apps
+  become: true
+
+- name: Update the system databases
+  shell: dconf update
+  become: true  

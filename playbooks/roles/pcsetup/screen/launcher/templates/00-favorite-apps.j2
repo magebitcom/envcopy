@@ -1,0 +1,2 @@
+[org/gnome/shell]
+favorite-apps = [{% for item in add_launchers_u22 %} '{{ item }}'{% if not loop.last %},{% endif %}{% endfor %}] 
