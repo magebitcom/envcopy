@@ -4,7 +4,6 @@ vscode_extensions:
  - formulahendry.auto-close-tag
  - RamiroBerrelleza.bitbucket-pull-requests
  - alefragnani.Bookmarks
- - CoenraadS.bracket-pair-colorizer
  - CoenraadS.bracket-pair-colorizer-2
  - msjsdiag.debugger-for-chrome
  - oouo-diogo-perdigao.docthis
@@ -23,7 +22,6 @@ vscode_extensions:
  - tomoki1207.pdf
  - kotfire.php-add-property
  - junstyle.php-cs-fixer
- - felixfbecker.php-debug
  - MehediDracula.php-namespace-resolver
  - xyz.plsql-language
  - esbenp.prettier-vscode

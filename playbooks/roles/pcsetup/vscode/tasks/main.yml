@@ -40,3 +40,4 @@
     executable: code
     name: "{{ item }}"
   loop: "{{ vscode_extensions }}"
+  ignore_errors: true
