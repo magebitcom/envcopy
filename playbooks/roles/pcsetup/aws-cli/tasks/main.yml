@@ -1,0 +1,24 @@
+- name: Download aws-cli installer
+  get_url:
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /tmp/awscliv2.zip
+
+- name: Unarchive aws-cli installer
+  unarchive:
+    src=/tmp/awscliv2.zip
+    dest=/tmp/
+    copy=no
+
+- name: Install aws-cli
+  sudo: true
+  command: /tmp/aws/install
+
+- name: Delete aws-cli archived installer
+  file:
+    path: "/tmp/awscliv2.zip"
+    state: absent
+
+- name: Delete aws-cli installer
+  file:
+    path: "/tmp/aws"
+    state: absent
