@@ -26,6 +26,7 @@
      - pcsetup/nginx
      - pcsetup/php
      - pcsetup/composer
+     - pcsetup/aws-cli
      - pcsetup/guake
      - pcsetup/slack
      - pcsetup/vscode
