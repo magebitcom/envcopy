@@ -12,7 +12,8 @@ ln -s /etc/nginx/sites-enabled/server.conf /etc/nginx/sites-available/
 
 mkdir /var/www/web/
 cp -r bootcamp/server /var/www/web/
-composer install /var/www/web/server/
+cd /var/www/web/server/
+composer install
 
 echo "127.0.0.1 web.local" >> /etc/hosts
 service nginx restart
