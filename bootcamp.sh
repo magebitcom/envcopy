@@ -12,10 +12,13 @@ ln -s /etc/nginx/sites-enabled/server.conf /etc/nginx/sites-available/
 
 mkdir /var/www/web/
 cp -r bootcamp/server /var/www/web/
-cd /var/www/web/server/
+cd /var/www/web/server/ 
 composer install --no-interaction
 
 echo "127.0.0.1 web.local" >> /etc/hosts
 service nginx restart
+
+chmod -R 775 /var/www/web/
+chown -R $USER:www-data /var/www/web/
 
 chmod 400 ~/.bashrc
