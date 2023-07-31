@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get install -y php-fpm php-curl php-xml php-json curl
+apt-get install -y openssl php8.1-bcmath php8.1-curl php8.1-mbstring php8.1-mysql php8.1-tokenizer php8.1-xml php8.1-zip curl php8.1-mysql php8.1-intl php8.1-fpm
 
 # Setup PC
 snap install --classic code
