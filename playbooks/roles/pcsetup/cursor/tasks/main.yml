@@ -1,0 +1,46 @@
+---
+- name: Ensure curl is installed
+  apt:
+    name: curl
+    state: present
+
+- name: Ensure installation directory exists
+  file:
+    path: "{{ appimage_path }}"
+    state: directory
+    mode: '0755'
+    
+- name: Get Cursor API response
+  uri:
+    url: "{{ api_url }}"
+    return_content: yes
+  register: cursor_api
+
+- name: Parse latest version and download URL
+  set_fact:
+    cursor_url: "{{ cursor_api.json.downloadUrl }}"
+
+- name: Download Cursor AppImage
+  get_url:
+    url: "{{ cursor_url }}"
+    dest: "{{ appimage_path }}"
+    mode: '0755'
+
+- name: Download Cursor icon
+  get_url:
+    url: "{{ icon_url }}"
+    dest: "{{ icon_path }}"
+    mode: '0644'
+
+- name: Create desktop entry for Cursor
+  copy:
+    dest: "{{ desktop_entry_path }}"
+    mode: '0644'
+    content: |
+      [Desktop Entry]
+      Name=Cursor
+      Exec={{ appimage_path }}
+      Icon={{ icon_path }}
+      Type=Application
+      Categories=Development;IDE;
+      Terminal=false

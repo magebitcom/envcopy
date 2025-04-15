@@ -29,7 +29,8 @@
      - pcsetup/aws-cli
      - pcsetup/guake
      - pcsetup/slack
-     - pcsetup/vscode
+     - pcsetup/cursor
+#     - pcsetup/vscode
      - pcsetup/chrome
      - pcsetup/screen/launcher
      - pcsetup/l2tp
