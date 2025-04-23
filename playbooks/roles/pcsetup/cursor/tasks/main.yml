@@ -6,7 +6,7 @@
 
 - name: Ensure installation directory exists
   file:
-    path: "{{ appimage_path }}"
+    path: "/opt/cursor"
     state: directory
     mode: '0755'
     
