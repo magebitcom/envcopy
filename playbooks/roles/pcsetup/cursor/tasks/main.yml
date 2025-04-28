@@ -4,6 +4,11 @@
     name: curl
     state: present
 
+- name: Ensure libfuse2 is installed
+  apt:
+    name: libfuse2
+    state: present
+
 - name: Ensure installation directory exists
   file:
     path: "/opt/cursor"
