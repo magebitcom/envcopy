@@ -44,7 +44,7 @@
     content: |
       [Desktop Entry]
       Name=Cursor
-      Exec="{{ appimage_path }} --no-sandbox"
+      Exec={{ appimage_path }} --no-sandbox
       Icon={{ icon_path }}
       Type=Application
       Categories=Development;IDE;
