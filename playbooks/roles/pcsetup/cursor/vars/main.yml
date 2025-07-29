@@ -1,6 +1,6 @@
 appimage_path: /opt/cursor/cursor.AppImage
 icon_path: /opt/cursor/cursor.png
 desktop_entry_path: /usr/share/applications/cursor.desktop
-icon_url: https://us1.discourse-cdn.com/flex020/uploads/cursor1/original/2X/a/a4f78589d63edd61a2843306f8e11bad9590f0ca.png
+icon_url: https://miro.medium.com/v2/resize:fit:700/1*YLg8VpqXaTyRHJoStnMuog.png
 api_url: https://www.cursor.com/api/download?platform=linux-x64&releaseTrack=stable
 
