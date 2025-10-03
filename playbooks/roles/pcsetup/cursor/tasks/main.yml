@@ -31,11 +31,42 @@
     dest: "{{ appimage_path }}"
     mode: '0755'
 
-- name: Download Cursor icon
-  get_url:
-    url: "{{ icon_url }}"
+- name: Extract Cursor AppImage contents (for icon)
+  command: "{{ appimage_path }} --appimage-extract"
+  args:
+    chdir: "/opt/cursor"
+    creates: "/opt/cursor/squashfs-root"
+
+- name: Copy Cursor icon from AppImage
+  copy:
+    src: "/opt/cursor/squashfs-root/.DirIcon"
     dest: "{{ icon_path }}"
     mode: '0644'
+    remote_src: yes
+
+- name: Check installed Cursor extensions
+  become: yes
+  become_user: "{{ username }}"
+  shell: "timeout 30 {{ appimage_path }} --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-extensions --list-extensions || echo 'timeout'"
+  environment:
+    HOME: "/home/{{ username }}"
+    DISPLAY: ":0"
+    ELECTRON_RUN_AS_NODE: "1"
+  register: cursor_extensions
+  failed_when: false
+  changed_when: false
+
+- name: Install Intelephense extension for Cursor
+  become: yes
+  become_user: "{{ username }}"
+  shell: "timeout 60 {{ appimage_path }} --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-extensions --install-extension bmewburn.vscode-intelephense-client --force"
+  environment:
+    HOME: "/home/{{ username }}"
+    DISPLAY: ":0"
+    ELECTRON_RUN_AS_NODE: "1"
+  when: cursor_extensions.stdout is not defined or 'bmewburn.vscode-intelephense-client' not in cursor_extensions.stdout
+  register: install_result
+  failed_when: false
 
 - name: Create desktop entry for Cursor
   copy:
@@ -49,3 +80,120 @@
       Type=Application
       Categories=Development;IDE;
       Terminal=false
+
+- name: Ensure Cursor User config directory exists
+  file:
+    path: "/home/{{ username }}/.config/Cursor/User"
+    state: directory
+    mode: '0755'
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Check if Cursor settings.json exists
+  stat:
+    path: "/home/{{ username }}/.config/Cursor/User/settings.json"
+  register: cursor_settings
+
+- name: Read existing Cursor settings
+  slurp:
+    src: "/home/{{ username }}/.config/Cursor/User/settings.json"
+  register: existing_settings
+  when: cursor_settings.stat.exists
+
+- name: Parse existing settings or create empty object
+  set_fact:
+    cursor_settings_json: "{{ (existing_settings.content | b64decode | from_json) if cursor_settings.stat.exists else {} }}"
+
+- name: Merge Intelephense license into settings
+  set_fact:
+    cursor_settings_json: "{{ cursor_settings_json | combine({'intelephense.licenceKey': intelephense_license}) }}"
+  when: intelephense_license is defined and intelephense_license | length > 0
+
+- name: Write updated Cursor settings
+  copy:
+    dest: "/home/{{ username }}/.config/Cursor/User/settings.json"
+    content: "{{ cursor_settings_json | to_nice_json }}"
+    mode: '0644'
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Ensure xdotool is installed for automation
+  apt:
+    name: xdotool
+    state: present
+  when: intelephense_license is defined and intelephense_license | length > 0
+
+- name: Create temporary PHP file to trigger Intelephense
+  copy:
+    dest: "/tmp/intelephense_trigger.php"
+    content: |
+      <?php
+      // Temporary file to trigger Intelephense
+      echo "License activation";
+    mode: '0644'
+  when: intelephense_license is defined and intelephense_license | length > 0
+
+- name: Create license activation script
+  copy:
+    dest: "/tmp/activate_intelephense.sh"
+    content: |
+      #!/bin/bash
+      export HOME="/home/{{ username }}"
+      export DISPLAY=:0
+      
+      # Start Cursor with the PHP file in background
+      {{ appimage_path }} --no-sandbox --disable-gpu --disable-dev-shm-usage /tmp/intelephense_trigger.php &
+      CURSOR_PID=$!
+      
+      # Wait for window to appear
+      sleep 8
+      
+      # Find Cursor window and activate it
+      WID=$(xdotool search --sync --onlyvisible --name "Cursor" | head -1)
+      xdotool windowactivate --sync $WID
+      
+      # Open command palette (Ctrl+Shift+P)
+      xdotool key --delay 100 ctrl+shift+p
+      sleep 1
+      
+      # Type the command
+      xdotool type --delay 50 "Intelephense: Enter licence key"
+      sleep 0.5
+      xdotool key Return
+      sleep 1
+      
+      # Enter the license key
+      xdotool type --delay 50 "{{ intelephense_license }}"
+      sleep 0.5
+      xdotool key Return
+      
+      # Wait for validation
+      sleep 5
+      
+      # Close Cursor
+      kill $CURSOR_PID 2>/dev/null || true
+      sleep 2
+      pkill -f "cursor.AppImage" || true
+    mode: '0755'
+  when: intelephense_license is defined and intelephense_license | length > 0
+
+- name: Execute license activation script
+  become: yes
+  become_user: "{{ username }}"
+  shell: /tmp/activate_intelephense.sh
+  environment:
+    HOME: "/home/{{ username }}"
+    DISPLAY: ":0"
+  when: intelephense_license is defined and intelephense_license | length > 0
+  async: 60
+  poll: 5
+  ignore_errors: yes
+
+- name: Clean up temporary files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/tmp/intelephense_trigger.php"
+    - "/tmp/activate_intelephense.sh"
+  when: intelephense_license is defined and intelephense_license | length > 0

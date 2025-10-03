@@ -17,7 +17,7 @@
   when: google_apt_exists.rc == 1
 
 - name: Install Google Chrome
-  apt: pkg=google-chrome-stable state=installed
+  apt: name=google-chrome-stable state=present
 
 - name: Add Magebit organization
   shell: mkdir /etc/opt/chrome/policies/enrollment -p && echo "d9fced84-0544-4002-b9b4-38f730657174" | tee -a  /etc/opt/chrome/policies/enrollment/CloudManagementEnrollmentToken > /dev/null

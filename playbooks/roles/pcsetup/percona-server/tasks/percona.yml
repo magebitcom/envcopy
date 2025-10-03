@@ -1,5 +1,5 @@
 ---
 # file: tasks/percona.yml
 
-- include: repo.yml
-- include: install.yml
+- include_tasks: repo.yml
+- include_tasks: install.yml

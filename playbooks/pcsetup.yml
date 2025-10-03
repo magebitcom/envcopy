@@ -13,6 +13,9 @@
     - name: surname
       prompt: What is your Surname?
       private: no
+    - name: intelephense_license
+      prompt: Enter Intelephense licence (input hidden)
+      private: yes
   pre_tasks:
   - name: install libutempter0
     apt:
@@ -22,10 +25,10 @@
   roles:
      - pcsetup/screen/turnoff
      - pcsetup/docker
-     - pcsetup/elasticsearch
-     - pcsetup/nginx
-     - pcsetup/php
-     - pcsetup/composer
+    #  - pcsetup/elasticsearch
+    #  - pcsetup/nginx
+    #  - pcsetup/php
+    #  - pcsetup/composer
      - pcsetup/aws-cli
      - pcsetup/guake
      - pcsetup/slack

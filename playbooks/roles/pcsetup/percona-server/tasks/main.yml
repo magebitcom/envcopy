@@ -1,2 +1,2 @@
 ---
-- include: percona.yml
+- include_tasks: percona.yml

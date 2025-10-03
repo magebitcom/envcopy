@@ -1,10 +1,10 @@
 ---
-- include: compat.yml
+- include_tasks: compat.yml
 
-- include: include_vars.yml
+- include_tasks: include_vars.yml
 
-- include: Debian.yml
+- include_tasks: Debian.yml
   when: ansible_os_family == 'Debian'
 
-- include: RedHat.yml
+- include_tasks: RedHat.yml
   when: ansible_os_family == 'RedHat'

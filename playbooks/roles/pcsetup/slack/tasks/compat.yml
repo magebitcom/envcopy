@@ -1,6 +1,6 @@
 ---
 - name: install python2-yum on ansible <=1.9.2/fedora 24
-  sudo: yes
+  become: yes
   raw: >
     if > /dev/null command -v yum && ! > /dev/null command -v dnf; then
        python -c "import yum" ||
@@ -10,7 +10,7 @@
   changed_when: False
 
 - name: install python2-dnf on ansible 2.1/fedora 24
-  sudo: yes
+  become: yes
   raw: >
     if > /dev/null command -v dnf; then
        python -c "import dnf" ||
@@ -30,11 +30,11 @@
 
 - set_fact:
     backcompat_pkg_mgr: 'dnf'
-  when: ansible_os_family == 'RedHat' and dnf_result|success
+  when: ansible_os_family == 'RedHat' and (dnf_result.rc is defined and dnf_result.rc == 0)
 
 - set_fact:
     backcompat_pkg_mgr: '{{ansible_pkg_mgr}}'
-  when: ansible_os_family == 'RedHat' and dnf_result|failed
+  when: ansible_os_family == 'RedHat' and (dnf_result.rc is not defined or dnf_result.rc != 0)
 
 - set_fact:
     backcompat_pkg_mgr: '{{ansible_pkg_mgr}}'
@@ -59,10 +59,10 @@
 # Install wget due to https://github.com/ansible/ansible/issues/12161
 - name: install wget with non-dnf
   action: "{{backcompat_pkg_mgr}} name=wget"
-  sudo: yes
+  become: yes
   when: >
     (backcompat_pkg_mgr == "yum" or backcompat_pkg_mgr == "apt")
-       and wget_result|failed
+       and (wget_result.rc is not defined or wget_result.rc != 0)
 
 # Install wget due to https://github.com/ansible/ansible/issues/12161
 # Use command since dnf was only added as a module in ansible 1.9.0
@@ -70,5 +70,5 @@
   command: dnf install -y wget
   args:
     creates: /usr/bin/wget
-  sudo: yes
-  when: backcompat_pkg_mgr == "dnf" and wget_result|failed
+  become: yes
+  when: backcompat_pkg_mgr == "dnf" and (wget_result.rc is not defined or wget_result.rc != 0)

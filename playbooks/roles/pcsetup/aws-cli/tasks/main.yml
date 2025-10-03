@@ -5,13 +5,15 @@
 
 - name: Unarchive aws-cli installer
   unarchive:
-    src=/tmp/awscliv2.zip
-    dest=/tmp/
-    copy=no
+    src: /tmp/awscliv2.zip
+    dest: /tmp/
+    copy: no
 
 - name: Install aws-cli
-  sudo: true
+  become: yes
   command: /tmp/aws/install
+  args:
+    creates: /usr/local/bin/aws
 
 - name: Delete aws-cli archived installer
   file:

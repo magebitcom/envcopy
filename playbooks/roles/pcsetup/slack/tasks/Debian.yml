@@ -1,11 +1,11 @@
 ---
 - name: apt-get update
   apt: update_cache=true cache_valid_time=3600
-  sudo: yes
+  become: yes
 
 - name: install gdebi
   apt: name=gdebi
-  sudo: yes
+  become: yes
 
 - name: Check if slack is installed
   command: dpkg-query -W slack-desktop
@@ -20,6 +20,6 @@
   when: check_slack.rc == 1
 
 - name: Install Ubuntu slack package
-  sudo: true
+  become: yes
   command: gdebi --non-interactive /tmp/slack-desktop.deb
   when: check_slack.rc == 1
